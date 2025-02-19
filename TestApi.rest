@@ -1,0 +1,14 @@
+# Một test ngăn cách bởi ###
+# ref: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#create-custom-http-methods
+###
+# Route mặc định của server
+GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/
+
+###
+# Kế Toán
+
+###
+# Kiểm Toán
+
+###
+
