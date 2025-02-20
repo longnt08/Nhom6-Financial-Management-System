@@ -2,10 +2,14 @@
 # ref: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#create-custom-http-methods
 ###
 # Route mặc định của server
-GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/
+GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/api
 
 ###
 # Kế Toán
+GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/api/accounting/category
+###
+
+GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/api/accounting/record
 
 ###
 # Kiểm Toán

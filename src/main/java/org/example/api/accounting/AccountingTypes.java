@@ -1,6 +1,6 @@
 package org.example.api.accounting;
 
-public enum AccountingTypes {
+public enum     AccountingTypes {
     SALE_AND_SERVICES_REVENUE(1, "Doanh thu bán hàng và cung cấp dịch vụ"),
     REVENUE_DEDUCTION(2, "Các khoản giảm trừ doanh thu"),
     SALE_AND_SERVICES_NET_REVENUE(10, "Doanh thu thuần về bán hàng và cung cấp dịch vụ", "1 - 2"),
@@ -21,6 +21,7 @@ public enum AccountingTypes {
     private int standardId;
     private String name;
     private String equation = "";
+
 
 
     AccountingTypes(int standardId, String name) {
