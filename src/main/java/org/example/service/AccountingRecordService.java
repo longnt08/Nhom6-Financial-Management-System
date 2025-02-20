@@ -30,8 +30,9 @@ public class AccountingRecordService implements AccountingRecordServiceLocal{
     }
 
     @Override
-    public void addRecord(AccountingRecord record) {
+    public AccountingRecord addRecord(AccountingRecord record) {
         collection.insertOne(record);
+        return record;
     }
 
     @Override

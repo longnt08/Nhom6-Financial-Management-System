@@ -1,17 +1,40 @@
+
+
+###
 # Một test ngăn cách bởi ###
 # ref: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#create-custom-http-methods
-###
 # Route mặc định của server
-GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/api
+GET http://localhost:8080/FinancialManagement/api
 
 ###
 # Kế Toán
-GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/api/accounting/category
+GET http://localhost:8080/FinancialManagement/api/accounting/category
 ###
 
-GET http://localhost:8080/FinancialManagement-1.0-SNAPSHOT/api/accounting/record
+GET http://localhost:8080/FinancialManagement/api/accounting/record
 
 ###
+
+GET http://localhost:8080/FinancialManagement/api/accounting/record/67b77bdb87394315af5bad37
+###
+
+POST http://localhost:8080/FinancialManagement/api/accounting/record
+Content-Type: application/json
+
+{
+  "user_id" : "67b5ff8e8332ff332b65f6fe",
+  "date":"12:00:00 01/01/2022",
+  "code": "REF123",
+  "name": "Test Name",
+  "description": "Test Description",
+  "debit": 100.0,
+  "credit": 50.0,
+  "category": "SALE_AND_SERVICES_REVENUE"
+}
+
+###
+
+GET http://localhost:8080/FinancialManagement/api/accounting/report/67b5ff928332ff332b65f729
 # Kiểm Toán
 
 ###
