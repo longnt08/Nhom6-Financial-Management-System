@@ -153,5 +153,48 @@ public class AccountingController {
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }
     }
+    @GET
+    @Path("/report")
+    public Response getReportList() {
+        FindIterable<AccountingReport> reports = reportService.getAll();
+        List<AccountingReport> reportList = new ArrayList<>();
+        for (AccountingReport report : reports) {
+            reportList.add(report);
+        }
 
-}
+        Gson gson = RecordBuilder();
+        String json = gson.toJson(reportList);
+
+        JsonObject resultData = new JsonObject();
+        resultData.addProperty("status", "status");
+        resultData.add("data", gson.fromJson(json, JsonArray.class));
+
+        return Response.status(Response.Status.OK).entity(resultData.toString()).build();
+    }
+
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/report")
+    public Response addReport(AccountingReport report) {
+
+        try {
+            AccountingReport result = reportService.create(report);
+            System.out.println("Result: " + result);
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+            ex.printStackTrace();
+            JsonObject error = new JsonObject();
+            error.addProperty("status", "fail");
+            error.addProperty("error", "An unexpected error has occurred while trying to add record.");
+            error.addProperty("stack-trace", ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+        }
+        Gson gson = RecordBuilder();
+
+        JsonObject status = new JsonObject();
+        status.addProperty("status", "success");
+        status.addProperty("data",gson.toJson(report));
+
+        return Response.status(Response.Status.OK).entity(status.toString()).build();
+    }}

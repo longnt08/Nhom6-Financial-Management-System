@@ -35,6 +35,32 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8080/FinancialManagement/api/accounting/report/67b5ff928332ff332b65f729
+
+###
+
+GET http://localhost:8080/FinancialManagement/api/accounting/report
+###
+
+
+POST http://localhost:8080/FinancialManagement/api/accounting/report
+Content-Type: application/json
+
+{
+  "user_id": "67b5ff8e8332ff332b65f6fe",
+  "report_type": "Báo cáo lợi nhuận",
+  "date_created": "12:00:00 01/03/2025",
+  "content": [
+    {
+      "category": "Revenue",
+      "amount": 12345.67
+    },
+    {
+      "category": "Expenses",
+      "amount": 6789.01
+    }
+  ]
+}
+###
 # Kiểm Toán
 
 ###

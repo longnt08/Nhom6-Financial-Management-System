@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import jakarta.ejb.Stateful;
@@ -19,8 +20,8 @@ public class AccountingReportService implements AccountingReportServiceLocal{
         this.collection = MongoDBConfig.getDatabase().getCollection("financial_reports", AccountingReport.class);
     }
 
-    public void getAll() {
-
+    public FindIterable<AccountingReport> getAll() {
+        return collection.find();
     }
 
     public AccountingReport getById(String id) {

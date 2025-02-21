@@ -20,13 +20,12 @@ public class MongoDBConfig {
     private static MongoDatabase database ;
 //        = mongoClient.getDatabase("financial_management");
     static {
-        // Create a CodecRegistry that includes the default codecs and the POJO codec
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
         );
 
-        mongoClient = MongoClients.create("mongodb+srv://diepanhnguyen2807:nhom6@cluster0.d9lbu.mongodb.net/"); // Replace with your MongoDB URL
+        mongoClient = MongoClients.create("mongodb+srv://diepanhnguyen2807:nhom6@cluster0.d9lbu.mongodb.net/");
         database = mongoClient.getDatabase("financial_management;").withCodecRegistry(pojoCodecRegistry);
     }
 
