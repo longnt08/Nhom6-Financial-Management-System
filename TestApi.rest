@@ -6,6 +6,9 @@
 # Route mặc định của server
 GET http://localhost:8080/FinancialManagement/api
 
+### Authentication
+GET http://localhost:8080/FinancialManagement/api
+
 ###
 # Kế Toán
 GET http://localhost:8080/FinancialManagement/api/accounting/category
@@ -25,10 +28,25 @@ Content-Type: application/json
   "user_id" : "67b5ff8e8332ff332b65f6fe",
   "date":"12:00:00 01/01/2022",
   "code": "REF123",
-  "name": "Test Name",
-  "description": "Test Description",
+  "name": "Giao dịch BDS",
+  "description": "Nhà mặt phố Hoàn Kiếm",
   "debit": 100.0,
   "credit": 50.0,
+  "category": "SALE_AND_SERVICES_REVENUE"
+}
+
+###
+PUT http://localhost:8080/FinancialManagement/api/accounting/record/67b77bdb87394315af5bad37
+Content-Type: application/json
+
+{
+  "user_id" : "67b5ff8e8332ff332b65f6fe",
+  "date":"12:00:00 01/01/2022",
+  "code": "REF123",
+  "name": "Giao dịch phương tiện vận tải",
+  "description": "Lamborghini Aventador",
+  "debit": 200.0,
+  "credit": 70.0,
   "category": "SALE_AND_SERVICES_REVENUE"
 }
 

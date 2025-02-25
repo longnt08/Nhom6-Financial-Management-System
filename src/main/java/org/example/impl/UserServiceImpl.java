@@ -1,7 +1,7 @@
 package org.example.impl;
 
 import jakarta.ejb.Stateless;
-import org.example.api.user.UserService;
+import org.example.service.UserService;
 import org.example.model.User;
 import org.example.repository.UserRepository;
 import org.example.utils.HashUtil;

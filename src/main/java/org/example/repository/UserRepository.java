@@ -4,6 +4,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.example.MongoDBConfig;
+import org.example.model.AccountingRecord;
 import org.example.model.User;
 import org.example.utils.MongoDBUtil;
 
@@ -13,8 +15,8 @@ public class UserRepository {
     private final MongoCollection<Document> userCollection;
 
     public UserRepository() {
-        MongoDatabase database = MongoDBUtil.getDatabase();
-        this.userCollection = database.getCollection("users");
+        this.userCollection = MongoDBConfig.getDatabase().getCollection("users", Document.class);
+
     }
 
     public User save(User user) {
