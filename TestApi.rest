@@ -65,3 +65,35 @@ Content-Type: application/json
 
 ###
 
+###
+# Ngân sách
+
+GET http://localhost:8080/FinancialManagement/api/budget/all
+
+###
+GET http://localhost:8080/FinancialManagement/api/budget/67b5ff968332ff332b65f751
+
+###
+POST http://localhost:8080/FinancialManagement/api/budget/add
+Content-Type: application/json
+
+{
+  "user_id": "67b5ff8c8332ff332b65f6ee",
+  "budget_type": "FOOD",
+  "expected_amount": 500000,
+  "spent_amount": 250000
+}
+
+###
+PUT http://localhost:8080/FinancialManagement/api/budget/67b5ff968332ff332b65f751
+Content-Type: application/json
+
+{
+  "user_id": "67b5ff8c8332ff332b65f6ee",
+  "budget_type": "TECHNOLOGY",
+  "expected_amount": 600000,
+  "spent_amount": 300000
+}
+
+###
+
