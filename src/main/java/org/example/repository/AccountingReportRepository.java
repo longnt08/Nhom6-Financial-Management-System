@@ -6,7 +6,11 @@ import com.mongodb.client.model.Filters;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
+import org.example.model.AccountingRecord;
 import org.example.model.AccountingReport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class AccountingReportRepository {
@@ -15,8 +19,14 @@ public class AccountingReportRepository {
     public AccountingReportRepository() {
         this.collection = MongoDBConfig.getDatabase().getCollection("financial_reports", AccountingReport.class);
     }
-    public FindIterable<AccountingReport> getAll() {
-        return collection.find();
+    public List<AccountingReport> getAll() {
+        FindIterable<AccountingReport> reports = collection.find();
+        List<AccountingReport> reportList = new ArrayList<>();
+        for (AccountingReport report : reports) {
+            reportList.add(report);
+        }
+
+        return reportList;
     }
 
     public AccountingReport findById(String id) {

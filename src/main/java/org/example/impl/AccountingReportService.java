@@ -8,6 +8,8 @@ import org.example.model.AccountingReport;
 import org.example.repository.AccountingReportRepository;
 import org.example.service.AccountingReportServiceLocal;
 
+import java.util.List;
+
 
 @Stateful
 @Local
@@ -17,7 +19,7 @@ public class AccountingReportService implements AccountingReportServiceLocal {
     private AccountingReportRepository repository;
 
     @Override
-    public FindIterable<AccountingReport> getAll() {
+    public List<AccountingReport> getAll() {
         return repository.getAll();
     }
 

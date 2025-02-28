@@ -9,12 +9,20 @@ import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
 import org.example.model.AccountingRecord;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ApplicationScoped
 public class AccountingRecordRepository {
 
     private final MongoCollection<AccountingRecord> collection;
-    public FindIterable<AccountingRecord> findAll() {
-        return collection.find();
+    public List<AccountingRecord> findAll() {
+        FindIterable<AccountingRecord> records = collection.find();
+        List<AccountingRecord> recordList = new ArrayList<>();
+        for (AccountingRecord record : records) {
+            recordList.add(record);
+        }
+        return recordList;
     }
 
     public AccountingRecordRepository() {

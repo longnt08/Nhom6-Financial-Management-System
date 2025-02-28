@@ -30,11 +30,7 @@ public class AccountingController {
     @GET
     @Path("/record")
     public Response getRecordList() {
-        FindIterable<AccountingRecord> records = recordService.getAll();
-        List<AccountingRecord> recordList = new ArrayList<>();
-        for (AccountingRecord record : records) {
-            recordList.add(record);
-        }
+        List<AccountingRecord> recordList = recordService.getAll();
 
         Gson gson = RecordBuilder();
         String json = gson.toJson(recordList);
@@ -156,11 +152,8 @@ public class AccountingController {
     @GET
     @Path("/report")
     public Response getReportList() {
-        FindIterable<AccountingReport> reports = reportService.getAll();
-        List<AccountingReport> reportList = new ArrayList<>();
-        for (AccountingReport report : reports) {
-            reportList.add(report);
-        }
+
+        List<AccountingReport> reportList = reportService.getAll();
 
         Gson gson = RecordBuilder();
         String json = gson.toJson(reportList);
