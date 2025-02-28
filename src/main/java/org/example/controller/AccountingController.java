@@ -7,15 +7,15 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.api.accounting.AccountingTypes;
-import org.example.impl.AccountingRecord;
-import org.example.impl.AccountingReport;
+import org.example.model.AccountingRecord;
+import org.example.model.AccountingReport;
 import org.example.service.AccountingRecordServiceLocal;
 import org.example.service.AccountingReportServiceLocal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.impl.AccountingRecord.RecordBuilder;
+import static org.example.model.AccountingRecord.RecordBuilder;
 
 @Path("/accounting")
 @Produces(MediaType.APPLICATION_JSON)

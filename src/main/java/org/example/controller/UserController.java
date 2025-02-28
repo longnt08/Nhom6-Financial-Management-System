@@ -6,7 +6,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.example.api.user.UserService;
+import org.example.service.UserService;
 import org.example.impl.UserServiceImpl;
 import org.example.model.User;
 import org.example.utils.JWTUtil;

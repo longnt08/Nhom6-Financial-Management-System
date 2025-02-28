@@ -1,37 +1,29 @@
-package org.example.service;
+package org.example.repository;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import jakarta.ejb.Stateful;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
-import org.example.impl.AccountingReport;
+import org.example.model.AccountingReport;
 
-import java.util.ArrayList;
-import java.util.List;
+@ApplicationScoped
+public class AccountingReportRepository {
+    private final MongoCollection<AccountingReport> collection;
 
-
-@Stateful
-public class AccountingReportService implements AccountingReportServiceLocal{
-    private MongoCollection<AccountingReport> collection;
-
-    public AccountingReportService() {
+    public AccountingReportRepository() {
         this.collection = MongoDBConfig.getDatabase().getCollection("financial_reports", AccountingReport.class);
     }
-
     public FindIterable<AccountingReport> getAll() {
         return collection.find();
     }
 
-    public AccountingReport getById(String id) {
+    public AccountingReport findById(String id) {
         return collection.find(Filters.eq("_id", new ObjectId(id))).first();
     }
 
-    public AccountingReport create(AccountingReport report) {
-        if (report.getId() == null) {
-            report.setId(new ObjectId());
-        }
+    public AccountingReport save(AccountingReport report) {
         collection.insertOne(report);
         return report;
     }
