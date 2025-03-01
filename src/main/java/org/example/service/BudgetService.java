@@ -7,8 +7,8 @@ import com.mongodb.client.result.UpdateResult;
 import jakarta.ejb.Stateful;
 import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
+import org.example.api.budget.BudgetType;
 import org.example.impl.Budget;
-import org.example.impl.BudgetType;
 
 import java.util.List;
 
