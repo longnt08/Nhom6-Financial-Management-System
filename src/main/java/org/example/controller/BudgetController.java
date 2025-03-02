@@ -7,8 +7,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.impl.Budget;
-//import org.example.impl.BudgetPredictResult;
-//import org.example.impl.BudgetType;
 import org.example.service.BudgetServiceLocal;
 
 import java.util.ArrayList;

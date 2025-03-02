@@ -15,7 +15,9 @@ import org.example.utils.ObjectIdDeserializer;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Data
 @NoArgsConstructor
@@ -30,10 +32,10 @@ public class AccountingRecord implements Serializable {
     private ObjectId user_id;
 
     @JsonDeserialize(using = DateTimeDeserializer.class)
-    private BsonDateTime date;
+    private Date date;
 
     @JsonDeserialize(using = DateTimeDeserializer.class)
-    private BsonDateTime reference_date;
+    private Date reference_date;
 
     private String code;
     private String name;
@@ -50,22 +52,16 @@ public class AccountingRecord implements Serializable {
                         return new JsonPrimitive(src.toHexString());
                     }
                 })
-                .registerTypeAdapter(BsonDateTime.class, new JsonSerializer<BsonDateTime>() {
-                    @Override
-                    public JsonElement serialize(BsonDateTime src, Type typeOfSrc, JsonSerializationContext context) {
-                        Date date = new Date(src.getValue());
-                        return new JsonPrimitive(date.toString());
-                    }
+                .registerTypeAdapter(Date.class, (JsonSerializer<Date>) (src, typeOfSrc, context) -> {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                    return new JsonPrimitive(dateFormat.format(src));
                 })
-                .registerTypeAdapter(AccountingTypes.class, new JsonSerializer<AccountingTypes>() {
-                    @Override
-                    public JsonElement serialize(AccountingTypes src, Type typeOfSrc, JsonSerializationContext context) {
-                        JsonObject obj = new JsonObject();
-                        obj.addProperty("standardId", src.getStandardId());
-                        obj.addProperty("name", src.getName());
-                        obj.addProperty("equation", src.getEquation());
-                        return obj;
-                    }
+                .registerTypeAdapter(AccountingTypes.class, (JsonSerializer<AccountingTypes>) (src, typeOfSrc, context) -> {
+                    JsonObject obj = new JsonObject();
+                    obj.addProperty("standardId", src.getStandardId());
+                    obj.addProperty("name", src.getName());
+                    obj.addProperty("equation", src.getEquation());
+                    return obj;
                 })
                 .create();
     }

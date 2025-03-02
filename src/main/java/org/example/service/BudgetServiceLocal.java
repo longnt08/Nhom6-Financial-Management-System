@@ -2,8 +2,8 @@ package org.example.service;
 
 import com.mongodb.client.FindIterable;
 import jakarta.ejb.Local;
+import org.example.api.budget.BudgetType;
 import org.example.impl.Budget;
-import org.example.impl.BudgetType;
 
 import java.util.List;
 

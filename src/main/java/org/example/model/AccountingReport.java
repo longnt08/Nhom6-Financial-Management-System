@@ -29,7 +29,6 @@ public class AccountingReport implements Serializable {
 
     private String report_type;
 
-    @BsonProperty("date_created")
     @JsonDeserialize(using = DateTimeDeserializer.class)
     private BsonDateTime date_created;
 

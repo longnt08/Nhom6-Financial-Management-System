@@ -18,7 +18,7 @@ GET http://localhost:8080/FinancialManagement/api/accounting/record
 
 ###
 
-GET http://localhost:8080/FinancialManagement/api/accounting/record/67b77bdb87394315af5bad37
+GET http://localhost:8080/FinancialManagement/api/accounting/record/67b5ff8e8332ff332b65f701
 ###
 
 POST http://localhost:8080/FinancialManagement/api/accounting/record
@@ -26,12 +26,12 @@ Content-Type: application/json
 
 {
   "user_id" : "67b5ff8e8332ff332b65f6fe",
-  "date":"12:00:00 01/01/2022",
+  "date":"2025-01-01T22:13:00.100Z",
   "code": "REF123",
   "name": "Giao dịch BDS",
-  "description": "Nhà mặt phố Hoàn Kiếm",
-  "debit": 100.0,
-  "credit": 50.0,
+  "description": "Nhà mặt phố ",
+  "debit": 20.4,
+  "credit": 9990.0,
   "category": "SALE_AND_SERVICES_REVENUE"
 }
 

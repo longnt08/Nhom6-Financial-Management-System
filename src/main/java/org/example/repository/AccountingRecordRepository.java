@@ -9,12 +9,20 @@ import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
 import org.example.model.AccountingRecord;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ApplicationScoped
 public class AccountingRecordRepository {
 
     private final MongoCollection<AccountingRecord> collection;
-    public FindIterable<AccountingRecord> findAll() {
-        return collection.find();
+    public List<AccountingRecord> findAll() {
+        FindIterable<AccountingRecord> records = collection.find();
+        List<AccountingRecord> recordList = new ArrayList<>();
+        for (AccountingRecord record : records) {
+            recordList.add(record);
+        }
+        return recordList;
     }
 
     public AccountingRecordRepository() {
@@ -22,7 +30,12 @@ public class AccountingRecordRepository {
     }
 
     public AccountingRecord findById(String id) {
-        return collection.find(Filters.eq("_id", new ObjectId(id))).first();
+        AccountingRecord record = collection.find(Filters.eq("_id", new ObjectId(id))).first();
+        if (record != null) {
+            System.out.println("Retrieved from MongoDB - Date: " + collection.find(Filters.eq("_id", new ObjectId(id))).first());
+            System.out.println("Date class: " + (record.getDate() != null ? record.getDate().getClass() : "null"));
+        }
+        return record;
     }
 
     public AccountingRecord save(AccountingRecord record) {
