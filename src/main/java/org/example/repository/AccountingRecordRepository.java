@@ -30,7 +30,12 @@ public class AccountingRecordRepository {
     }
 
     public AccountingRecord findById(String id) {
-        return collection.find(Filters.eq("_id", new ObjectId(id))).first();
+        AccountingRecord record = collection.find(Filters.eq("_id", new ObjectId(id))).first();
+        if (record != null) {
+            System.out.println("Retrieved from MongoDB - Date: " + collection.find(Filters.eq("_id", new ObjectId(id))).first());
+            System.out.println("Date class: " + (record.getDate() != null ? record.getDate().getClass() : "null"));
+        }
+        return record;
     }
 
     public AccountingRecord save(AccountingRecord record) {

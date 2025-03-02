@@ -8,15 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Record Details</title>
+    <title>Chi tiet giao dich</title>
 </head>
 <body>
-<h2>Report Details</h2>
 <div>
-    <p>ID: ${report.id}</p>
-    <p>Date: ${report.createdAt}</p>
-    <!-- Add more report fields here -->
+
+    <h1>Giao dich: ${record.name}</h1>
+    <p>ID: ${record.id}</p>
+    <p>Ngay giao dich: ${record.date}</p>
+    <p>Ngay khai bao: ${record.reference_date}</p>
+    <p>Ma giao dich: ${record.code}</p>
+    <p>Mo ta: ${record.description}</p>
+    <p>So tien no: ${record.debit}</p>
+    <p>So tien co: ${record.credit}</p>
+    <p>Loai giao dich: ${record.category.getName()}</p>
+    <p>Id nguoi tao: ${record.user_id}</p>
 </div>
-<a href="${pageContext.request.contextPath}/accounting/">Back to List</a>
+<a href="${pageContext.request.contextPath}/accounting/record">Quay lai danh sach</a>
 </body>
 </html>

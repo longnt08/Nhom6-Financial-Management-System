@@ -46,6 +46,8 @@ public class AccountingController {
     @Path("/record/{id}")
     public Response getRecordById(@PathParam("id") String id) {
         AccountingRecord record = recordService.get(id);
+
+        System.out.println("dateStr:"+record);
         Gson gson = RecordBuilder();
 
         JsonObject resultData = new JsonObject();

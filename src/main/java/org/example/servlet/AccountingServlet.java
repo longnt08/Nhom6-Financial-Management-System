@@ -6,82 +6,111 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.api.accounting.AccountingTypes;
+import org.example.model.AccountingRecord;
 import org.example.service.AccountingRecordServiceLocal;
-import org.example.service.AccountingReportServiceLocal;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
+import java.util.TimeZone;
 
-@WebServlet("/accounting/*")
+@WebServlet("/accounting/record/*")
 public class AccountingServlet extends HttpServlet {
     @EJB
     private AccountingRecordServiceLocal recordService;
-    @EJB
-    private AccountingReportServiceLocal reportService;
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String action = req.getPathInfo();
 
+
         if (action == null || action.equals("/")) {
             req.setAttribute("records", recordService.getAll());
             req.getRequestDispatcher("/WEB-INF/accounting/recordList.jsp").forward(req, resp);
-        } else if (action.equals("/view")) {
+        } else if (action.equals("/create")) {
+            req.getRequestDispatcher("/WEB-INF/accounting/recordForm.jsp").forward(req, resp);
+        } else if (action.equals("/insert")) {
+            insertRecord(req, resp);
+        } else if (action.equals("/edit")) {
+            String id = req.getParameter("id");
+            AccountingRecord record = recordService.get(id);
+            req.setAttribute("record", record);
+            req.getRequestDispatcher("/WEB-INF/accounting/recordForm.jsp").forward(req, resp);
+        } else if (action.equals("/update")) {
+            editRecord(req, resp);
+        }
+        else if (action.equals("/view")) {
             String id = req.getParameter("id");
             req.setAttribute("record", recordService.get(id));
             req.getRequestDispatcher("/WEB-INF/accounting/recordView.jsp").forward(req, resp);
         }
     }
-}
-//@WebServlet("/accounting/*")
-//public class AccountingServlet extends HttpServlet {
-//    @EJB
-//    private AccountingReportServiceLocal accountingService;
-//
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-//            throws ServletException, IOException {
-//        String action = req.getPathInfo();
-//
-//        if (action == null || action.equals("/")) {
-//            req.setAttribute("records", accountingService.getAll());
-//            req.getRequestDispatcher("/accounting.jsp").forward(req, resp);
-//        } else if (action.equals("/edit")) {
-//            String id = req.getParameter("id");
-//            req.setAttribute("record", accountingService.getById(id));
-//            req.getRequestDispatcher("/accounting-edit.jsp").forward(req, resp);
-//        }
-//    }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-//            throws ServletException, IOException {
-//        String action = req.getPathInfo();
-//
-//        if (action == null || action.equals("/create")) {
-//            AccountingReport report = new AccountingReport();
-//            populateReport(report, req);
-//            accountingService.create(report);
-//        } else if (action.equals("/update")) {
-//            String id = req.getParameter("id");
-//            AccountingReport report = accountingService.getById(id);
-//            populateReport(report, req);
-//            // Assuming you add update method to service
-//            accountingService.update(id, report);
-//        } else if (action.equals("/delete")) {
-//            String id = req.getParameter("id");
-//            // Assuming you add delete method to service
-//            accountingService.delete(id);
-//        }
-//
-//        resp.sendRedirect(req.getContextPath() + "/accounting");
-//    }
-//
-//    private void populateReport(AccountingReport report, HttpServletRequest req) {
-//        report.setName(req.getParameter("name"));
-//        report.setDescription(req.getParameter("description"));
-//        // Add other fields based on your AccountingReport class
-//        report.setCreatedAt(new Date());
-//    }
-//}
+    private void editRecord(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String id = req.getParameter("id");
+            if (id == null || id.isEmpty()) {
+                throw new Exception("Record ID is required");
+            }
+
+            AccountingRecord record = recordService.get(id);
+
+            record.setDescription(req.getParameter("description"));
+
+            record.setDebit(Double.parseDouble(req.getParameter("debit")));
+            record.setCredit(Double.parseDouble(req.getParameter("credit")));
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+            record.setDate(dateFormat.parse(req.getParameter("date")));
+//            record.setReference_date(Date.from(Instant.now()));
+
+            record.setCategory(AccountingTypes.valueOf(req.getParameter("category")));
+
+            AccountingRecord result = recordService.updateRecord(id, record);
+            System.out.println(result);
+
+            resp.sendRedirect(req.getContextPath() + "/accounting/record");
+        } catch (Exception e) {
+            req.setAttribute("error", "Error changing record info: " + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/accounting/recordForm.jsp").forward(req, resp);
+        }
+    }
+    private void insertRecord(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            AccountingRecord record = new AccountingRecord();
+
+            record.setName(req.getParameter("name"));
+            record.setCode(req.getParameter("code"));
+            record.setDescription(req.getParameter("description"));
+
+            record.setDebit(Double.parseDouble(req.getParameter("debit")));
+            record.setCredit(Double.parseDouble(req.getParameter("credit")));
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+            record.setDate(dateFormat.parse(req.getParameter("date")));
+            record.setReference_date(Date.from(Instant.now()));
+
+            record.setCategory(AccountingTypes.valueOf(req.getParameter("category")));
+
+            AccountingRecord result = recordService.addRecord(record);
+            System.out.println(result);
+
+            resp.sendRedirect(req.getContextPath() + "/accounting/record");
+        } catch (Exception e) {
+            req.setAttribute("error", "Error creating record: " + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/accounting/recordForm.jsp").forward(req, resp);
+        }
+    }
+}
