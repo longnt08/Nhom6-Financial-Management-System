@@ -23,12 +23,12 @@
 <body>
 
 <div>
-    <a style="background: blue; color:white; font-size: 30px; " href="<%=request.getContextPath()%>/accounting/record/create" >Tao Giao Dich</a>
+    <a style="background: blue; color:white; font-size: 30px; "
+       href="<%=request.getContextPath()%>/accounting/record/create">Tao Giao Dich</a>
 </div>
 <h3>Danh sach giao dich</h3>
 <table>
     <tr>
-        <th></th>
         <th>Ngay GD</th>
         <th>Code</th>
         <th>Ten</th>
@@ -36,12 +36,11 @@
         <th>No</th>
         <th>Co</th>
         <th>Loai GD</th>
+        <th></th>
+        <th></th>
     </tr>
     <c:forEach items="${records}" var="record">
         <tr>
-            <td><a href="record/edit?id=<c:out value='${record.id}' />">Chinh sua</a>
-                &nbsp;&nbsp;&nbsp;&nbsp; <a
-                        href="record/view?id=<c:out value='${record.id}' />">Chi tiet</a></td>
             <td>${record.date}</td>
             <td>${record.code}</td>
             <td>${record.name}</td>
@@ -49,6 +48,10 @@
             <td>${record.debit}</td>
             <td>${record.credit}</td>
             <td>${record.category.getName()}</td>
+            <td><a href="record/edit?id=<c:out value='${record.id}' />">Chinh sua</a>
+            </td>
+            <td>
+                <a href="record/view?id=<c:out value='${record.id}' />">Chi tiet</a></td>
         </tr>
     </c:forEach>
 </table>

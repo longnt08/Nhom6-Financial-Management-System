@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 @WebServlet("/accounting/record/*")
-public class AccountingServlet extends HttpServlet {
+public class AccountingRecordServlet extends HttpServlet {
     @EJB
     private AccountingRecordServiceLocal recordService;
 
@@ -63,15 +63,17 @@ public class AccountingServlet extends HttpServlet {
 
             AccountingRecord record = recordService.get(id);
 
+
+            record.setName(req.getParameter("name"));
             record.setDescription(req.getParameter("description"));
 
             record.setDebit(Double.parseDouble(req.getParameter("debit")));
             record.setCredit(Double.parseDouble(req.getParameter("credit")));
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-            record.setDate(dateFormat.parse(req.getParameter("date")));
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+//            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//
+//            record.setDate(dateFormat.parse(req.getParameter("date")));
 //            record.setReference_date(Date.from(Instant.now()));
 
             record.setCategory(AccountingTypes.valueOf(req.getParameter("category")));
