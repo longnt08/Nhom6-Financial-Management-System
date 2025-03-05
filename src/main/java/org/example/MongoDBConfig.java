@@ -13,7 +13,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 @Singleton
 public class MongoDBConfig {
-    private static MongoClient mongoClient ;
+    private static final MongoClient mongoClient ;
 //            = MongoClients.create("mongodb+srv://diepanhnguyen2807:nhom6@cluster0.d9lbu.mongodb.net/");
     @Getter
     @Setter
