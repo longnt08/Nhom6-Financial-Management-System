@@ -60,7 +60,6 @@ public class AccountingRecord implements Serializable {
                     JsonObject obj = new JsonObject();
                     obj.addProperty("standardId", src.getStandardId());
                     obj.addProperty("name", src.getName());
-                    obj.addProperty("equation", src.getEquation());
                     return obj;
                 })
                 .create();

@@ -10,6 +10,7 @@ import org.example.MongoDBConfig;
 import org.example.model.AccountingRecord;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
@@ -50,5 +51,14 @@ public class AccountingRecordRepository {
 
     public void delete(String id) {
         collection.deleteOne(Filters.eq("_id", new ObjectId(id)));
+    }
+
+    public List<AccountingRecord> getByDateRange(Date start, Date end) {
+        FindIterable<AccountingRecord> records = collection.find(Filters.and(Filters.gte("date", start), Filters.lte("date", end)));
+        List<AccountingRecord> recordList = new ArrayList<>();
+        for (AccountingRecord record : records) {
+            recordList.add(record);
+        }
+        return recordList;
     }
 }

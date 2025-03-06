@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.BsonDateTime;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
@@ -12,6 +11,7 @@ import org.example.utils.DateTimeDeserializer;
 import org.example.utils.ObjectIdDeserializer;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,10 +27,20 @@ public class AccountingReport implements Serializable {
     @JsonDeserialize(using = ObjectIdDeserializer.class)
     private ObjectId user_id;
 
-    private String report_type;
+    @BsonProperty("report_type")
+    private String reportType;
+
+    @BsonProperty("start_date")
+    @JsonDeserialize(using = DateTimeDeserializer.class)
+    private Date startDate;
+
+    @BsonProperty("end_date")
+    @JsonDeserialize(using = DateTimeDeserializer.class)
+    private Date endDate;
+
 
     @JsonDeserialize(using = DateTimeDeserializer.class)
-    private BsonDateTime date_created;
+    private Date date_created;
 
     private List<ReportContent> content;
 

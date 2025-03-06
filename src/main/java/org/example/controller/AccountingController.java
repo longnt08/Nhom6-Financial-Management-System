@@ -172,10 +172,15 @@ public class AccountingController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/report")
     public Response addReport(AccountingReport report) {
-
         try {
-            AccountingReport result = reportService.create(report);
-            System.out.println("Result: " + result);
+            AccountingReport result = reportService.createReport(report);
+            Gson gson = RecordBuilder();
+
+            JsonObject status = new JsonObject();
+            status.addProperty("status", "success");
+            status.addProperty("data",gson.toJson(result));
+
+            return Response.status(Response.Status.OK).entity(status.toString()).build();
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
             ex.printStackTrace();
@@ -185,11 +190,34 @@ public class AccountingController {
             error.addProperty("stack-trace", ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }
-        Gson gson = RecordBuilder();
+    }
 
-        JsonObject status = new JsonObject();
-        status.addProperty("status", "success");
-        status.addProperty("data",gson.toJson(report));
+    @PUT
+    @Path("/report/{id}")
+    public Response updateReport(@PathParam("id") String id, AccountingReport newReport) {
+        try {
+            AccountingReport result = reportService.updateReport(id, newReport);
 
-        return Response.status(Response.Status.OK).entity(status.toString()).build();
-    }}
+            if (result == null) {
+                JsonObject error = new JsonObject();
+                error.addProperty("status", "fail");
+                error.addProperty("error", "Report not found for id: " + id);
+                return Response.status(Response.Status.NOT_FOUND).entity(error.toString()).build();
+            }
+
+            Gson gson = new Gson();
+            JsonObject response = new JsonObject();
+            response.addProperty("status", "success");
+            response.add("data", gson.fromJson(gson.toJson(result), JsonObject.class));
+
+            return Response.status(Response.Status.OK).entity(response.toString()).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsonObject error = new JsonObject();
+            error.addProperty("status", "fail");
+            error.addProperty("error", "An unexpected error occurred while trying to update report.");
+            error.addProperty("stack-trace", ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+        }
+    }
+}

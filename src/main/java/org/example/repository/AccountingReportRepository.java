@@ -6,7 +6,6 @@ import com.mongodb.client.model.Filters;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
-import org.example.model.AccountingRecord;
 import org.example.model.AccountingReport;
 
 import java.util.ArrayList;
@@ -36,5 +35,10 @@ public class AccountingReportRepository {
     public AccountingReport save(AccountingReport report) {
         collection.insertOne(report);
         return report;
+    }
+
+    public AccountingReport update(String id, AccountingReport newInfo) {
+        collection.replaceOne(Filters.eq("_id", new ObjectId(id)), newInfo);
+        return newInfo;
     }
 }
