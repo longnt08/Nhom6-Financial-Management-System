@@ -64,9 +64,9 @@ POST http://localhost:8080/FinancialManagement/api/accounting/report
 Content-Type: application/json
 
 {
-  "reportType": "Bao cao Q1 2024",
-  "startDate": "2024-01-01T00:00:00.000Z",
-  "endDate": "2024-03-31T23:59:59.999Z",
+  "reportType": "Bao cao Q1 2022",
+  "startDate": "2022-01-01T00:00:00.000Z",
+  "endDate": "2022-03-31T23:59:59.999Z",
   "user_id": "67b5ff8e8332ff332b65f6fe"
 }
 

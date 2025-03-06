@@ -10,6 +10,7 @@ import org.example.repository.AccountingRecordRepository;
 import org.example.repository.AccountingReportRepository;
 import org.example.service.AccountingReportServiceLocal;
 
+import java.time.Instant;
 import java.util.*;
 
 
@@ -40,7 +41,7 @@ public class AccountingReportService implements AccountingReportServiceLocal {
 
         List<AccountingReport.ReportContent> content = createReportContent(records);
 
-        report.setDate_created(new Date());
+        report.setDate_created(Date.from(Instant.now()));
         report.setContent(content);
 
         return repository.save(report);

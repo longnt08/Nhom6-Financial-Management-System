@@ -56,10 +56,14 @@ public class AccountingRecordServlet extends HttpServlet {
 
     private void editRecord(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            req.setCharacterEncoding("UTF-8");
             String id = req.getParameter("id");
+
+
             if (id == null || id.isEmpty()) {
-                throw new Exception("Record ID is required");
+                throw new RuntimeException("Record ID is required");
             }
+
 
             AccountingRecord record = recordService.get(id);
 
@@ -70,11 +74,6 @@ public class AccountingRecordServlet extends HttpServlet {
             record.setDebit(Double.parseDouble(req.getParameter("debit")));
             record.setCredit(Double.parseDouble(req.getParameter("credit")));
 
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-//            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-//
-//            record.setDate(dateFormat.parse(req.getParameter("date")));
-//            record.setReference_date(Date.from(Instant.now()));
 
             record.setCategory(AccountingTypes.valueOf(req.getParameter("category")));
 
@@ -89,6 +88,7 @@ public class AccountingRecordServlet extends HttpServlet {
     }
     private void insertRecord(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            req.setCharacterEncoding("UTF-8");
             AccountingRecord record = new AccountingRecord();
 
             record.setName(req.getParameter("name"));

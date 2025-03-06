@@ -8,13 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Chi tiet giao dich</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
 <div>
 
-    <h1>Giao dich: ${record.name}</h1>
-    <p>ID: ${record.id}</p>
+    <div class="report-header">
+        <h1>Giao dich: ${record.name}</h1>
+        <p>ID: ${record.id}</p>
+    </div>
     <p>Ngay giao dich: ${record.date}</p>
     <p>Ngay khai bao: ${record.reference_date}</p>
     <p>Ma giao dich: ${record.code}</p>

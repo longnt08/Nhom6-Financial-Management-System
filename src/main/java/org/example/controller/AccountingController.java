@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import com.google.gson.*;
-import com.mongodb.client.FindIterable;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -142,7 +141,7 @@ public class AccountingController {
                 error.addProperty("error", "ProfitReport not found for id: " + id);
                 return Response.status(Response.Status.NOT_FOUND).entity(error.toString()).build();
             }
-            Gson gson = new Gson();
+            Gson gson = RecordBuilder();
             return Response.ok(gson.toJson(report)).build();
         } catch (Exception ex) {
             JsonObject error = new JsonObject();
@@ -205,7 +204,7 @@ public class AccountingController {
                 return Response.status(Response.Status.NOT_FOUND).entity(error.toString()).build();
             }
 
-            Gson gson = new Gson();
+            Gson gson = RecordBuilder();
             JsonObject response = new JsonObject();
             response.addProperty("status", "success");
             response.add("data", gson.fromJson(gson.toJson(result), JsonObject.class));
