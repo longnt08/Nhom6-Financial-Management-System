@@ -27,11 +27,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkRegister(String username, String password, String email, String role) {
+        if (userRepository.findByUsername(email) != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public User login(String username, String password) {
         User user = userRepository.findByUsername(username);
-        if (user == null || !HashUtil.verifyPassword(password, user.getPassword())) {
+        if (user == null || !HashUtil.hashPassword(password).equals(user.getPassword())) {
             throw new RuntimeException("Invalid username or password");
         }
         return user;
     }
+
+    @Override
+    public User authenticate(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user == null || !HashUtil.verifyPassword(password, user.getPassword())) {
+            return null;
+        }
+        return user;
+    }
+
 }
