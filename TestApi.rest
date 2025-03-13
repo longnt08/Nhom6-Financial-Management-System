@@ -64,23 +64,20 @@ POST http://localhost:8080/FinancialManagement/api/accounting/report
 Content-Type: application/json
 
 {
-  "reportType": "Bao cao Q1 2022",
-  "startDate": "2022-01-01T00:00:00.000Z",
-  "endDate": "2022-03-31T23:59:59.999Z",
-  "user_id": "67b5ff8e8332ff332b65f6fe"
+  "user_id": "67b5ff8e8332ff332b65f6fe",
+  "report_type": "Báo cáo lợi nhuận",
+  "date_created": "12:00:00 01/03/2025",
+  "content": [
+    {
+      "category": "Revenue",
+      "amount": 12345.67
+    },
+    {
+      "category": "Expenses",
+      "amount": 6789.01
+    }
+  ]
 }
-
-###
-PUT http://localhost:8080/FinancialManagement/api/accounting/report/67c9d17fe48fa41c7a78b8ce
-Content-Type: application/json
-
-{
-"reportType": "Bao cao Q1 2022",
-"startDate": "2022-01-01T00:00:00.000Z",
-"endDate": "2022-03-31T23:59:59.999Z",
-"user_id": "67b5ff8e8332ff332b65f6fe"
-}
-
 ###
 # Kiểm Toán
 
@@ -117,4 +114,38 @@ Content-Type: application/json
 }
 
 ###
+#Đầu tư
+
+GET http://localhost:8080/FinancialManagement/api/investment/record
+###
+
+GET http://localhost:8080/FinancialManagement/api/investment/record/67b5ff988332ff332b65f765
+
+###
+
+POST http://localhost:8080/FinancialManagement/api/investment/record
+Content-Type: application/json
+
+{
+  "userId": { "$oid": "67b5ff8c8332ff332b65f6ee" },
+  "investmentType": "STOCK",
+  "investDate": { "$date": "2024-02-01T00:00:00.000Z" },
+  "investedAmount": 500000,
+  "expectedReturnRate": 2.5
+}
+
+###
+
+PUT http://localhost:8080/FinancialManagement/api/investment/record/67b5ff988332ff332b65f765
+Content-Type: application/json
+
+{
+  "userId": "67b5ff8c8332ff332b65f6ee",
+  "investmentType": "REAL_ESTATE",
+  "investDate": "2024-01-31T00:00:00.000Z",
+  "investedAmount": 800000,
+  "expectedReturnRate": 1.85
+}
+###
+
 
