@@ -1,11 +1,8 @@
 package org.example.service;
 
-import com.mongodb.client.FindIterable;
 import jakarta.ejb.Local;
-import org.bson.types.ObjectId;
 import org.example.model.AccountingReport;
 
-import java.util.Date;
 import java.util.List;
 
 @Local

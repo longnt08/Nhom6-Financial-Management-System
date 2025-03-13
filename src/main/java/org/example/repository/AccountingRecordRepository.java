@@ -3,7 +3,6 @@ package org.example.repository;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;

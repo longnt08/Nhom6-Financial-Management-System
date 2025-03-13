@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -28,8 +30,8 @@
         <h1>Giao dich: ${record.name}</h1>
         <p>ID: ${record.id}</p>
     </div>
-    <p>Ngay giao dich: ${record.date}</p>
-    <p>Ngay khai bao: ${record.reference_date}</p>
+    <p>Ngay giao dich: <fmt:formatDate value="${record.date}" pattern="dd/MM/yyyy HH:mm"/></p>
+    <p>Ngay khai bao: <fmt:formatDate value="${record.reference_date}" pattern="dd/MM/yyyy HH:mm"/></p>
     <p>Ma giao dich: ${record.code}</p>
     <p>Mo ta: ${record.description}</p>
     <p>So tien no: ${record.debit}</p>
