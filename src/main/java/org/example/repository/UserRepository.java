@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
 import org.example.model.AccountingRecord;
 import org.example.model.User;
-import org.example.utils.MongoDBUtil;
 
 import static com.mongodb.client.model.Filters.eq;
 
