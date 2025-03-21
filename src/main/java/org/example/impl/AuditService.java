@@ -18,10 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateful
-@Local
 public class AuditService implements AuditServiceLocal {
-    @Inject
-    private AuditRepository repository;
+
 
     @EJB
     private AccountingRecordServiceLocal recordService;
