@@ -29,9 +29,9 @@ Content-Type: application/json
   "date":"2025-01-01T22:13:00.100Z",
   "code": "REF123",
   "name": "Giao dịch BDS",
-  "description": "Nhà mặt phố ",
+  "description": "Trump Tower",
   "debit": 20.4,
-  "credit": 9990.0,
+  "credit": 1000000.0,
   "category": "SALE_AND_SERVICES_REVENUE"
 }
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 {
   "user_id" : "67b5ff8e8332ff332b65f6fe",
-  "date":"12:00:00 01/01/2022",
+  "date":"2022-01-01T22:12:00.100Z",
   "code": "REF123",
   "name": "Giao dịch phương tiện vận tải",
   "description": "Lamborghini Aventador",
@@ -52,7 +52,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/FinancialManagement/api/accounting/report/67b5ff928332ff332b65f729
+GET http://localhost:8080/FinancialManagement/api/accounting/report/67ca60fd7e4409236a0b3872
 
 ###
 
@@ -65,24 +65,64 @@ Content-Type: application/json
 
 {
   "user_id": "67b5ff8e8332ff332b65f6fe",
-  "report_type": "Báo cáo lợi nhuận",
-  "date_created": "12:00:00 01/03/2025",
-  "content": [
-    {
-      "category": "Revenue",
-      "amount": 12345.67
-    },
-    {
-      "category": "Expenses",
-      "amount": 6789.01
-    }
-  ]
+  "reportType": "Bao cao loi nhuan",
+  "startDate": "2024-01-01T00:00:00.000Z",
+  "endDate": "2024-03-31T23:59:59.000Z",
+  "date_created": "2024-04-01T12:30:00.000Z",
+  "content": []
+}
+
+###
+PUT http://localhost:8080/FinancialManagement/api/accounting/report/67eb6fc884c06e5b28d13b54
+Content-Type: application/json
+
+{
+  "user_id": "67b5ff8e8332ff332b65f6fe",
+  "reportType": "Bao cao quy 1 nam 2024",
+  "startDate": "2024-01-01T00:00:00.000Z",
+  "endDate": "2024-03-31T23:59:59.000Z",
+  "date_created": "2024-04-01T12:30:00.000Z",
+  "content": []
 }
 ###
 # Kiểm Toán
+POST http://localhost:8080/FinancialManagement/api/audit
+Content-Type: application/json
 
+{
+  "title": "Annual Financial Audit",
+  "userId": "67b5ff8e8332ff332b65f6fe",
+  "auditType": "RECORD_INFO",
+  "auditDate": "2024-04-01T12:30:00.000Z",
+  "result": "ACCEPTED",
+  "recordsId": [
+    "67b5ff8f8332ff332b65f704",
+    "67b5ff8f8332ff332b65f705"
+  ]
+}
 ###
 
+GET http://localhost:8080/FinancialManagement/api/audit
+###
+GET http://localhost:8080/FinancialManagement/api/audit/67c9ea97e4beec2441729276
+###
+POST http://localhost:8080/FinancialManagement/api/audit
+Content-Type: application/json
+
+{
+  "title": "Kiem toan lan 1",
+  "userId": "67b5ff8e8332ff332b65f6fe",
+  "auditType": "CREDIT_AND_DEBIT_MATCHING",
+  "auditDate": "2024-04-01T12:30:00.000Z",
+  "result": "REJECTED",
+  "reportsId": [
+    "67c9ea97e4beec2441729276",
+    "67c9eaa9e4beec2441729277"
+  ]
+}
+###
+
+DELETE http://localhost:8080/FinancialManagement/api/audit/67ebc21e663a7c1f3d08e00d
 ###
 # Ngân sách
 

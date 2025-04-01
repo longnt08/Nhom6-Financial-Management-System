@@ -11,6 +11,7 @@ import org.example.api.audit.AuditCategory;
 import org.example.api.audit.AuditStatusTypes;
 import org.example.utils.DateTimeDeserializer;
 import org.example.utils.ObjectIdDeserializer;
+import org.example.utils.ObjectIdListDeserializer;
 
 import java.util.Date;
 import java.util.List;
@@ -23,9 +24,11 @@ public class Audit {
     @BsonId
     private ObjectId id;
 
+    private String title;
+
     @BsonProperty("user_id")
     @JsonDeserialize(using = ObjectIdDeserializer.class)
-    private ObjectId user_id;
+    private ObjectId userId;
 
     @BsonProperty("audit_type")
     private AuditCategory auditType;
@@ -36,9 +39,12 @@ public class Audit {
 
     private AuditStatusTypes result;
 
-    @BsonProperty("documents_id")
-    private List<ObjectId> documentsId;
+    @BsonProperty("reports_id")
+    @JsonDeserialize(using = ObjectIdListDeserializer.class)
+    private List<ObjectId> reportsId;
 
-    private transient List<AccountingRecord> records;
-    private transient List<AccountingReport> reports;
+    @BsonProperty("records_id")
+    @JsonDeserialize(using = ObjectIdListDeserializer.class)
+    private List<ObjectId> recordsId;
+
 }

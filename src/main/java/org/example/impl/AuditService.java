@@ -4,26 +4,50 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateful;
 import jakarta.inject.Inject;
-import org.bson.types.ObjectId;
-import org.example.api.audit.AuditCategory;
-import org.example.model.AccountingRecord;
-import org.example.model.AccountingReport;
+import org.bson.Document;
 import org.example.model.Audit;
 import org.example.repository.AuditRepository;
-import org.example.service.AccountingRecordServiceLocal;
-import org.example.service.AccountingReportServiceLocal;
 import org.example.service.AuditServiceLocal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateful
+@Local
 public class AuditService implements AuditServiceLocal {
 
+    @Inject
+    private AuditRepository repository;
+//    @Override
+//    public List<Audit> getAll() {
+//        return repository.findAll();
+//    }
+//
+//    @Override
+//    public Audit get(String id) {
+//        return repository.findById(id);
+//    }
+    @Override
+    public List<Document> getAll() {
+        return repository.findAllWithRelations();
+    }
 
-    @EJB
-    private AccountingRecordServiceLocal recordService;
+    @Override
+    public Document get(String id) {
+        return repository.findByIdWithRelations(id);
+    }
 
-    @EJB
-    private AccountingReportServiceLocal reportService;
+    @Override
+    public Audit addAudit(Audit audit) {
+        return repository.save(audit);
+    }
+
+    @Override
+    public Audit updateAudit(String id, Audit newInfo) {
+        return repository.update(id, newInfo);
+    }
+
+    @Override
+    public void deleteAudit(String id) {
+        repository.delete(id);
+    }
 }

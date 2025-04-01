@@ -26,6 +26,24 @@ public class AccountingController {
     @EJB
     private AccountingReportServiceLocal reportService;
 
+    @DELETE
+    @Path("/record/{id}")
+    public Response deleteRecord(@PathParam("id") String id) {
+        try {
+            recordService.deleteRecord(id);
+            JsonObject response = new JsonObject();
+            response.addProperty("status", "success");
+            return Response.status(Response.Status.OK).entity(response.toString()).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsonObject error = new JsonObject();
+            error.addProperty("status", "fail");
+            error.addProperty("error", "An unexpected error occurred while trying to delete record.");
+            error.addProperty("stack-trace", ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+        }
+    }
+
     @GET
     @Path("/record")
     public Response getRecordList() {
@@ -215,6 +233,24 @@ public class AccountingController {
             JsonObject error = new JsonObject();
             error.addProperty("status", "fail");
             error.addProperty("error", "An unexpected error occurred while trying to update report.");
+            error.addProperty("stack-trace", ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+        }
+    }
+
+    @DELETE
+    @Path("/report/{id}")
+    public Response deleteReport(@PathParam("id") String id) {
+        try {
+            reportService.deleteReport(id);
+            JsonObject response = new JsonObject();
+            response.addProperty("status", "success");
+            return Response.status(Response.Status.OK).entity(response.toString()).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsonObject error = new JsonObject();
+            error.addProperty("status", "fail");
+            error.addProperty("error", "An unexpected error occurred while trying to delete report.");
             error.addProperty("stack-trace", ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }

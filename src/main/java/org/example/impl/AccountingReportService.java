@@ -57,6 +57,11 @@ public class AccountingReportService implements AccountingReportServiceLocal {
         return repository.update(id, newInfo);
     }
 
+    @Override
+    public void deleteReport(String id) {
+        repository.delete(id);
+    }
+
     //helper method cho create va update
     private List<AccountingReport.ReportContent> createReportContent(List<AccountingRecord> records) {
         List<AccountingReport.ReportContent> content = new ArrayList<>();

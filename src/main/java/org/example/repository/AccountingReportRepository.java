@@ -41,4 +41,8 @@ public class AccountingReportRepository {
         collection.replaceOne(Filters.eq("_id", new ObjectId(id)), newInfo);
         return newInfo;
     }
+
+    public void delete(String id) {
+        collection.deleteOne(Filters.eq("_id", new ObjectId(id)));
+    }
 }

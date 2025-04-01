@@ -15,4 +15,6 @@ public interface AccountingReportServiceLocal {
     List<AccountingReport> getAll();
 
     AccountingReport updateReport(String id, AccountingReport newInfo);
+
+    void deleteReport(String id);
 }
