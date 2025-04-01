@@ -36,3 +36,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+
+### react ###
+# dependency directories
+node_modules/
+# build output
+/client/build/
+# local env files
+.env.local
