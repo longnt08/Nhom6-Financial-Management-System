@@ -22,6 +22,13 @@ public class InvestmentController {
     @EJB
     private InvestmentServiceLocal investmentService;
 
+    // xu ly cors
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
+    }
+
     @GET
     @Path("/record")
     public Response getInvestmentList() {

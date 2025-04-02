@@ -21,6 +21,14 @@ import static org.example.model.AccountingRecord.RecordBuilder;
 public class AuditController {
     @EJB
     private AuditServiceLocal auditService;
+
+    // xu ly cors
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
+    }
+    
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

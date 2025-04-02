@@ -27,6 +27,13 @@ public class BudgetController {
 
     private Gson gson = new Gson();
 
+    // xu ly cors
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
+    }
+
     @GET
     @Path("/all")
     public Response getAllBudgets() {

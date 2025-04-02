@@ -10,12 +10,21 @@ import org.example.service.UserService;
 import org.example.impl.UserServiceImpl;
 import org.example.model.User;
 import org.example.utils.JWTUtil;
+import jakarta.ws.rs.OPTIONS;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserController {
     private final UserService userService = new UserServiceImpl();
+
+
+    // xu ly cors
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
+    }
 
     @POST
     @Path("/register")

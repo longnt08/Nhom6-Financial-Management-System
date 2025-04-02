@@ -26,6 +26,13 @@ public class AccountingController {
     @EJB
     private AccountingReportServiceLocal reportService;
 
+    // xu ly cors
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response options() {
+        return Response.ok().build();
+    }
+
     @DELETE
     @Path("/record/{id}")
     public Response deleteRecord(@PathParam("id") String id) {
