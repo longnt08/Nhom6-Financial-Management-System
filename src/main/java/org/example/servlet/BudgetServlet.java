@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.impl.Budget;
+import org.example.model.Budget;
 import org.example.service.BudgetServiceLocal;
 
 import java.io.IOException;

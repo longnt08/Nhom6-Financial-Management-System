@@ -18,6 +18,13 @@ import AuditForm from "./pages/Audit/AuditForm.jsx";
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import { AuthProvider, useAuth } from './AuthContext.jsx';
+import BudgetPage from "./pages/budget/BudgetPage.jsx";
+import BudgetForm from "./pages/budget/BudgetForm.jsx";
+import BudgetView from "./pages/budget/BudgetView.jsx";
+import InvestmentPage from './pages/Investment/InvestmentPage.jsx';
+import InvestmentForm from './pages/Investment/InvestmentForm.jsx';
+import InvestmentView from './pages/Investment/InvestmentView.jsx';
+import './styles.css';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -132,7 +139,61 @@ function AppContent() {
               <div>Home Page / Dashboard</div>
             </ProtectedRoute>
           } />
+          <Route path="/budget" element={
+            <ProtectedRoute>
+              <BudgetPage />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/budget/create" element={
+            <ProtectedRoute>
+              <BudgetForm />
+            </ProtectedRoute>
+          } />
+          <Route path="/budget/view/:id" element={
+            <ProtectedRoute>
+              <BudgetView />
+            </ProtectedRoute>
+          } />
+          <Route path="/budget/edit/:id" element={
+            <ProtectedRoute>
+              <BudgetForm />
+            </ProtectedRoute>
+          } />
+          <Route
+              path="/investment"
+              element={
+                <ProtectedRoute>
+                  <InvestmentPage />
+                </ProtectedRoute>
+              }
+          />
+          <Route
+              path="/investment/record/create"
+              element={
+                <ProtectedRoute>
+                  <InvestmentForm />
+                </ProtectedRoute>
+              }
+          />
+          <Route
+              path="/investment/record/view/:id"
+              element={
+                <ProtectedRoute>
+                  <InvestmentView />
+                </ProtectedRoute>
+              }
+          />
+          <Route
+              path="/investment/record/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <InvestmentForm />
+                </ProtectedRoute>
+              }
+          />
         </Routes>
+
       </div>
     </div>
   );

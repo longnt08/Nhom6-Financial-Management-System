@@ -1,15 +1,17 @@
-package org.example.service;
+package org.example.impl;
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import jakarta.ejb.Stateful;
 import org.bson.types.ObjectId;
 import org.example.MongoDBConfig;
 import org.example.api.budget.BudgetType;
-import org.example.impl.Budget;
+import org.example.model.Budget;
+import org.example.service.BudgetServiceLocal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateful
@@ -21,8 +23,8 @@ public class BudgetService implements BudgetServiceLocal {
     }
 
     @Override
-    public FindIterable<Budget> getAll() {
-        return collection.find();
+    public List<Budget> getAll() {
+        return collection.find().into(new ArrayList<>()); // Chuyển FindIterable thành List
     }
 
     @Override
@@ -44,13 +46,13 @@ public class BudgetService implements BudgetServiceLocal {
 
     @Override
     public boolean deleteBudget(String id) {
-        collection.deleteOne(Filters.eq("_id", new ObjectId(id)));
-        return false;
+        DeleteResult result = collection.deleteOne(Filters.eq("_id", new ObjectId(id)));
+        return result.getDeletedCount() > 0; // Trả về true nếu xóa thành công
     }
 
     @Override
     public List<Budget> getBudgets(BudgetType type) {
-        return List.of();
+        return collection.find(Filters.eq("type", type)).into(new ArrayList<>());
     }
 }
 

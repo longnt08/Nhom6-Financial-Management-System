@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.impl;
 
 import com.mongodb.client.FindIterable;
 import jakarta.ejb.Local;
@@ -6,6 +6,7 @@ import jakarta.ejb.Stateful;
 import jakarta.inject.Inject;
 import org.example.model.Investment;
 import org.example.repository.InvestmentRepository;
+import org.example.service.InvestmentServiceLocal;
 
 @Stateful
 @Local

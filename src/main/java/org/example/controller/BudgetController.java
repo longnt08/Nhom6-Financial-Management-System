@@ -1,18 +1,12 @@
 package org.example.controller;
 
 import com.google.gson.*;
-import com.mongodb.client.FindIterable;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.example.impl.Budget;
+import org.example.model.Budget;
 import org.example.service.BudgetServiceLocal;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.example.impl.Budget.BudgetBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +19,9 @@ public class BudgetController {
     @EJB
     private BudgetServiceLocal budgetService;
 
-    private Gson gson = new Gson();
+    private Gson gson = Budget.BudgetBuilder(); // Sử dụng BudgetBuilder để đồng nhất cách serialize
 
-    // xu ly cors
+    // Xử lý CORS
     @OPTIONS
     @Path("{path : .*}")
     public Response options() {
@@ -38,12 +32,7 @@ public class BudgetController {
     @Path("/all")
     public Response getAllBudgets() {
         try {
-            FindIterable<Budget> budgets = budgetService.getAll();
-            List<Budget> budgetList = new ArrayList<>();
-            for (Budget budget : budgets) {
-                budgetList.add(budget);
-            }
-
+            List<Budget> budgetList = budgetService.getAll(); // Lấy danh sách budget
             JsonObject result = new JsonObject();
             result.addProperty("status", "success");
             result.add("data", gson.toJsonTree(budgetList));
@@ -113,7 +102,7 @@ public class BudgetController {
         try {
             boolean deleted = budgetService.deleteBudget(id);
             if (!deleted) {
-                return buildErrorResponse("Budget not found for id: " + id, Response.Status.NOT_FOUND);
+                return buildErrorResponse("Budget not found or could not be deleted for id: " + id, Response.Status.NOT_FOUND);
             }
 
             JsonObject response = new JsonObject();
@@ -126,10 +115,13 @@ public class BudgetController {
         }
     }
 
-    // Helper methods for error handling
+    // Xử lý lỗi chung
     private Response handleException(Exception ex, String message) {
         ex.printStackTrace();
-        return buildErrorResponse(message + " " + ex.getMessage(), Response.Status.BAD_REQUEST);
+        JsonObject error = new JsonObject();
+        error.addProperty("status", "fail");
+        error.addProperty("error", message + " " + ex.getMessage());
+        return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
     }
 
     private Response buildErrorResponse(String errorMessage, Response.Status status) {
@@ -139,3 +131,5 @@ public class BudgetController {
         return Response.status(status).entity(error.toString()).build();
     }
 }
+
+
