@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String username, String password) {
         User user = userRepository.findByUsername(username);
-        if (user == null || !HashUtil.hashPassword(password).equals(user.getPassword())) {
+        if (user == null || !HashUtil.verifyPassword(password, user.getPassword())) {
             throw new RuntimeException("Invalid username or password");
         }
         return user;

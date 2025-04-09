@@ -6,6 +6,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.example.api.user.LoginRequest;
 import org.example.service.UserService;
 import org.example.impl.UserServiceImpl;
 import org.example.model.User;
@@ -39,9 +40,9 @@ public class UserController {
 
     @POST
     @Path("/login")
-    public Response login(User user) {
+    public Response login(LoginRequest loginRequest) {
         try {
-            User loggedInUser = userService.login(user.getUsername(), user.getPassword());
+            User loggedInUser = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
             String token = JWTUtil.generateToken(loggedInUser);
             return Response.ok("{\"token\":\"" + token + "\"}").build();
         } catch (Exception e) {

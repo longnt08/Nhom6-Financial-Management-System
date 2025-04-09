@@ -187,5 +187,22 @@ Content-Type: application/json
   "expectedReturnRate": 1.85
 }
 ###
+POST http://localhost:8080/FinancialManagement/api/user/login
+Content-Type: application/json
 
+{
+  "username": "tester",
+  "password": "123456"
+}
 
+###
+POST http://localhost:8080/FinancialManagement/api/user/register
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "123456",
+  "email": "gayaf@gmail.com",
+  "role": "admin"
+
+}

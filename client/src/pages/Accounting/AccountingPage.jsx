@@ -49,7 +49,7 @@ const AccountingPage = () => {
 
   return (
     <div>
-      <h1>Accounting Page</h1>
+      <h1>Trang kế toán</h1>
       <div>
         <button onClick={() => handleFormAppearance("RECORD")}>
           Giao dịch kế toán
