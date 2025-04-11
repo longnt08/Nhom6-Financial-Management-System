@@ -2,13 +2,13 @@ package org.example.impl;
 
 import com.mongodb.client.FindIterable;
 import jakarta.ejb.Local;
-import jakarta.ejb.Stateful;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import org.example.model.Investment;
 import org.example.repository.InvestmentRepository;
 import org.example.service.InvestmentServiceLocal;
 
-@Stateful
+@Stateless
 @Local
 public class InvestmentService implements InvestmentServiceLocal {
     @Inject

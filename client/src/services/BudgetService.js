@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '/budget'; // Điều chỉnh base URL theo cấu hình server của bạn
+const BASE_URL = '/api/budget';
 
 const getAllBudgets = async () => {
     const response = await axios.get(`${BASE_URL}/all`);

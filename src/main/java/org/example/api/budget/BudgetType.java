@@ -7,6 +7,7 @@ public enum BudgetType {
     R_AND_D,
     MARKETING,
     OPERATION,
+    FOOD,
     INVESTMENT;
 
     public static BudgetType parse(String type) {

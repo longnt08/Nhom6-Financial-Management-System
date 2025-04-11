@@ -13,6 +13,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 import org.example.utils.DateTimeDeserializer;
+import org.example.utils.ObjectIdDeserializer;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,17 +27,24 @@ public class Investment implements Serializable {
     private ObjectId id;
 
     @BsonProperty("user_id")
+    @JsonDeserialize(using = ObjectIdDeserializer.class)
     private ObjectId userId;
 
     @JsonDeserialize(using = DateTimeDeserializer.class)
-    private BsonDateTime investDate;
+    @BsonProperty("invest_date")
+    private Date investDate;
 
     @JsonDeserialize(using = DateTimeDeserializer.class)
-    private BsonDateTime endDate;
+    @BsonProperty("end_date")
+    private Date endDate;
 
+    @BsonProperty("investment_type")
     private String investmentType;
+    @BsonProperty("invested_amount")
     private double investedAmount;
+    @BsonProperty("expected_return_rate")
     private double expectedReturnRate;
+
 
     public static Gson InvestmentBuilder() {
         return new GsonBuilder()

@@ -66,10 +66,9 @@ public class BudgetServlet extends HttpServlet {
 
             Budget budget = new Budget();
             budget.setName(req.getParameter("name"));
-            budget.setExpectedAmount(Double.parseDouble(req.getParameter("expectedAmount")));
-            budget.setSpentAmount(Double.parseDouble(req.getParameter("spentAmount")));
+            budget.setExpected_amount(Double.parseDouble(req.getParameter("expectedAmount")));
+            budget.setSpent_amount(Double.parseDouble(req.getParameter("spentAmount")));
 
-            budget.setCreatedAt(Date.from(Instant.now()));
 
             Budget result = budgetService.addBudget(budget);
             System.out.println(result);
@@ -93,8 +92,8 @@ public class BudgetServlet extends HttpServlet {
             }
 
             existing.setName(req.getParameter("name"));
-            existing.setExpectedAmount(Double.parseDouble(req.getParameter("expectedAmount")));
-            existing.setSpentAmount(Double.parseDouble(req.getParameter("spentAmount")));
+            existing.setExpected_amount(Double.parseDouble(req.getParameter("expectedAmount")));
+            existing.setSpent_amount(Double.parseDouble(req.getParameter("spentAmount")));
 
             Budget result = budgetService.updateBudget(id, existing);
             System.out.println(result);

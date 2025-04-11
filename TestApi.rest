@@ -129,17 +129,18 @@ DELETE http://localhost:8080/FinancialManagement/api/audit/67ebc21e663a7c1f3d08e
 GET http://localhost:8080/FinancialManagement/api/budget/all
 
 ###
-GET http://localhost:8080/FinancialManagement/api/budget/67b5ff968332ff332b65f751
+GET http://localhost:8080/FinancialManagement/api/budget/67b5ff978332ff332b65f75e
 
 ###
 POST http://localhost:8080/FinancialManagement/api/budget/add
 Content-Type: application/json
 
 {
-  "user_id": "67b5ff8c8332ff332b65f6ee",
-  "budget_type": "FOOD",
-  "expected_amount": 500000,
-  "spent_amount": 250000
+  "user_id": "67b5ff8e8332ff332b65f6fe",
+  "name": "Iphone 16 pro max",
+  "budget_type": "TECH",
+  "expected_amount": 50000000,
+  "spent_amount": 25000000
 }
 
 ###
@@ -167,11 +168,12 @@ POST http://localhost:8080/FinancialManagement/api/investment/record
 Content-Type: application/json
 
 {
-  "userId": { "$oid": "67b5ff8c8332ff332b65f6ee" },
+  "userId": "67b5ff8e8332ff332b65f6fe",
   "investmentType": "STOCK",
-  "investDate": { "$date": "2024-02-01T00:00:00.000Z" },
-  "investedAmount": 500000,
-  "expectedReturnRate": 2.5
+  "investDate": "2024-02-01T00:00:00.000Z" ,
+  "investedAmount": 50000.4,
+  "expectedReturnRate": 2.5,
+  "endDate": "2024-03-01T00:00:00.000Z"
 }
 
 ###

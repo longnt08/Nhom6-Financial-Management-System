@@ -14,7 +14,7 @@ public class InvestmentRepository {
     private final MongoCollection<Investment> collection;
 
     public InvestmentRepository() {
-        this.collection = MongoDBConfig.getDatabase().getCollection("investment_records", Investment.class);
+        this.collection = MongoDBConfig.getDatabase().getCollection("investments", Investment.class);
     }
 
     public FindIterable<Investment> findAll() {

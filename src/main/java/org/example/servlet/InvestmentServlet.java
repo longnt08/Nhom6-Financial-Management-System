@@ -73,8 +73,8 @@ public class InvestmentServlet extends HttpServlet {
             Date investDate = sdf.parse(req.getParameter("investDate"));
             Date endDate = sdf.parse(req.getParameter("endDate"));
 
-            investment.setInvestDate(new org.bson.BsonDateTime(investDate.getTime()));
-            investment.setEndDate(new org.bson.BsonDateTime(endDate.getTime()));
+//            investment.setInvestDate(new org.bson.BsonDateTime(investDate.getTime()));
+//            investment.setEndDate(new org.bson.BsonDateTime(endDate.getTime()));
 
             investmentService.addInvestment(investment);
 
@@ -107,8 +107,8 @@ public class InvestmentServlet extends HttpServlet {
             Date investDate = sdf.parse(req.getParameter("investDate"));
             Date endDate = sdf.parse(req.getParameter("endDate"));
 
-            investment.setInvestDate(new org.bson.BsonDateTime(investDate.getTime()));
-            investment.setEndDate(new org.bson.BsonDateTime(endDate.getTime()));
+//            investment.setInvestDate(new org.bson.BsonDateTime(investDate.getTime()));
+//            investment.setEndDate(new org.bson.BsonDateTime(endDate.getTime()));
 
             investmentService.updateInvestment(id, investment);
 
