@@ -8,30 +8,33 @@ const BudgetForm = () => {
     const [error, setError] = useState(null);
 
     const [budget, setBudget] = useState({
+        user_id: '',
         name: '',
-        amount: 0,
-        startDate: '',
-        endDate: '',
-        type: 'MONTHLY'
+        budget_type: 'TECHNOLOGY',
+        expected_amount: 0,
+        spent_amount: 0
     });
 
     const budgetTypes = [
-        { value: 'MONTHLY', name: 'Hàng tháng' },
-        { value: 'QUARTERLY', name: 'Hàng quý' },
-        { value: 'YEARLY', name: 'Hàng năm' }
+        { value: 'TECHNOLOGY', name: 'Công nghệ' },
+        { value: 'FOOD', name: 'Thực phẩm' },
+        { value: 'HUMAN_RESOURCES', name: 'Nhân sự' },
+        { value: 'OPERATION', name: 'Tổ chức' },
+        { value: 'MARKETING', name: 'Thị trường' }
     ];
 
     useEffect(() => {
         if (id) {
             BudgetService.getBudget(id)
-                .then(data => {
-                    if (data.startDate) {
-                        data.formattedStartDate = new Date(data.startDate).toISOString().substring(0, 16);
-                    }
-                    if (data.endDate) {
-                        data.formattedEndDate = new Date(data.endDate).toISOString().substring(0, 16);
-                    }
-                    setBudget(data);
+                .then(response => {
+                    const data = response.data;
+                    setBudget({
+                        user_id: data.user_id || '',
+                        name: data.name || '',
+                        budget_type: data.budget_type || 'TECHNOLOGY',
+                        expected_amount: data.expected_amount || 0,
+                        spent_amount: data.spent_amount || 0
+                    });
                 })
                 .catch(error => {
                     setError('Error loading budget: ' + error.message);
@@ -43,7 +46,7 @@ const BudgetForm = () => {
         const { name, value } = e.target;
         setBudget({
             ...budget,
-            [name]: name === 'amount' ? parseFloat(value) : value
+            [name]: name === 'expected_amount' || name === 'spent_amount' ? parseFloat(value) : value
         });
     };
 
@@ -52,13 +55,13 @@ const BudgetForm = () => {
 
         const submitBudget = {
             ...budget,
-            startDate: new Date(budget.startDate).toISOString(),
-            endDate: new Date(budget.endDate).toISOString(),
-            id: id
+            user_id: budget.user_id || '67b5ff8c8332ff332b65f6ee', // Giá trị mặc định nếu cần
+            expected_amount: parseFloat(budget.expected_amount),
+            spent_amount: parseFloat(budget.spent_amount)
         };
 
         const savePromise = id
-            ? BudgetService.updateBudget(submitBudget)
+            ? BudgetService.updateBudget({ ...submitBudget, id })
             : BudgetService.createBudget(submitBudget);
 
         savePromise
@@ -79,6 +82,17 @@ const BudgetForm = () => {
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
+                    <label>User ID:</label>
+                    <input
+                        type="text"
+                        name="user_id"
+                        value={budget.user_id}
+                        onChange={handleInputChange}
+                        placeholder="Enter user ID (e.g., 67b5ff8c8332ff332b65f6ee)"
+                    />
+                </div>
+
+                <div className="form-group">
                     <label>Tên:</label>
                     <input
                         type="text"
@@ -90,44 +104,10 @@ const BudgetForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <label>Số tiền:</label>
-                    <input
-                        type="number"
-                        name="amount"
-                        step="0.01"
-                        value={budget.amount}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Ngày bắt đầu:</label>
-                    <input
-                        type="datetime-local"
-                        name="startDate"
-                        value={budget.formattedStartDate || (budget.startDate ? new Date(budget.startDate).toISOString().substring(0, 16) : '')}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Ngày kết thúc:</label>
-                    <input
-                        type="datetime-local"
-                        name="endDate"
-                        value={budget.formattedEndDate || (budget.endDate ? new Date(budget.endDate).toISOString().substring(0, 16) : '')}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Loại:</label>
+                    <label>Loại Budget:</label>
                     <select
-                        name="type"
-                        value={budget.type}
+                        name="budget_type"
+                        value={budget.budget_type}
                         onChange={handleInputChange}
                     >
                         {budgetTypes.map(type => (
@@ -136,6 +116,30 @@ const BudgetForm = () => {
                             </option>
                         ))}
                     </select>
+                </div>
+
+                <div className="form-group">
+                    <label>Số tiền dự kiến:</label>
+                    <input
+                        type="number"
+                        name="expected_amount"
+                        step="0.01"
+                        value={budget.expected_amount}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Số tiền đã chi:</label>
+                    <input
+                        type="number"
+                        name="spent_amount"
+                        step="0.01"
+                        value={budget.spent_amount}
+                        onChange={handleInputChange}
+                        required
+                    />
                 </div>
 
                 <button type="submit">Lưu</button>

@@ -8,34 +8,36 @@ const InvestmentForm = () => {
     const [error, setError] = useState(null);
 
     const [investment, setInvestment] = useState({
-        userId: '67b5ff8c8332ff332b65f6ee', // Giả sử userId mặc định
-        investDate: '',
-        endDate: '',
-        investmentType: '',
+        userId: '',
+        investmentType: 'STOCK',
         investedAmount: 0,
         expectedReturnRate: 0,
+        investDate: '',
+        endDate: ''
     });
 
     const investmentTypes = [
         { value: 'STOCK', name: 'Cổ phiếu' },
-        { value: 'REAL_ESTATE', name: 'Bất động sản' },
         { value: 'BOND', name: 'Trái phiếu' },
-        { value: 'CRYPTO', name: 'Tiền điện tử' },
+        { value: 'REAL_ESTATE', name: 'Bất động sản' },
+        { value: 'MUTUAL_FUND', name: 'Quỹ tương hỗ' }
     ];
 
     useEffect(() => {
         if (id) {
             InvestmentService.getInvestment(id)
-                .then((data) => {
-                    if (data.investDate) {
-                        data.formattedInvestDate = new Date(data.investDate).toISOString().substring(0, 16);
-                    }
-                    if (data.endDate) {
-                        data.formattedEndDate = new Date(data.endDate).toISOString().substring(0, 16);
-                    }
-                    setInvestment(data);
+                .then(response => {
+                    const data = response.data;
+                    setInvestment({
+                        userId: data.userId || '',
+                        investmentType: data.investmentType || 'STOCK',
+                        investedAmount: data.investedAmount || 0,
+                        expectedReturnRate: data.expectedReturnRate || 0,
+                        investDate: data.investDate ? new Date(data.investDate).toISOString().substring(0, 16) : '',
+                        endDate: data.endDate ? new Date(data.endDate).toISOString().substring(0, 16) : ''
+                    });
                 })
-                .catch((error) => {
+                .catch(error => {
                     setError('Error loading investment: ' + error.message);
                 });
         }
@@ -45,10 +47,7 @@ const InvestmentForm = () => {
         const { name, value } = e.target;
         setInvestment({
             ...investment,
-            [name]:
-                name === 'investedAmount' || name === 'expectedReturnRate'
-                    ? parseFloat(value)
-                    : value,
+            [name]: name === 'investedAmount' || name === 'expectedReturnRate' ? parseFloat(value) : value
         });
     };
 
@@ -57,20 +56,22 @@ const InvestmentForm = () => {
 
         const submitInvestment = {
             ...investment,
-            investDate: new Date(investment.investDate).toISOString(),
-            endDate: new Date(investment.endDate).toISOString(),
-            id: id,
+            userId: investment.userId || '67b5ff8e8332ff332b65f6fe', // Default userId if needed
+            investedAmount: parseFloat(investment.investedAmount),
+            expectedReturnRate: parseFloat(investment.expectedReturnRate),
+            investDate: investment.investDate ? new Date(investment.investDate).toISOString() : null,
+            endDate: investment.endDate ? new Date(investment.endDate).toISOString() : null
         };
 
         const savePromise = id
-            ? InvestmentService.updateInvestment(submitInvestment)
+            ? InvestmentService.updateInvestment({ ...submitInvestment, id })
             : InvestmentService.createInvestment(submitInvestment);
 
         savePromise
             .then(() => {
                 navigate('/investment');
             })
-            .catch((error) => {
+            .catch(error => {
                 setError('Error saving investment: ' + error.message);
             });
     };
@@ -84,47 +85,24 @@ const InvestmentForm = () => {
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Ngày đầu tư:</label>
+                    <label>User ID:</label>
                     <input
-                        type="datetime-local"
-                        name="investDate"
-                        value={
-                            investment.formattedInvestDate ||
-                            (investment.investDate
-                                ? new Date(investment.investDate).toISOString().substring(0, 16)
-                                : '')
-                        }
+                        type="text"
+                        name="userId"
+                        value={investment.userId}
                         onChange={handleInputChange}
-                        required
+                        placeholder="Enter user ID (e.g., 67b5ff8e8332ff332b65f6fe)"
                     />
                 </div>
 
                 <div className="form-group">
-                    <label>Ngày kết thúc:</label>
-                    <input
-                        type="datetime-local"
-                        name="endDate"
-                        value={
-                            investment.formattedEndDate ||
-                            (investment.endDate
-                                ? new Date(investment.endDate).toISOString().substring(0, 16)
-                                : '')
-                        }
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Loại đầu tư:</label>
+                    <label>Loại Investment:</label>
                     <select
                         name="investmentType"
                         value={investment.investmentType}
                         onChange={handleInputChange}
-                        required
                     >
-                        <option value="">Chọn loại đầu tư</option>
-                        {investmentTypes.map((type) => (
+                        {investmentTypes.map(type => (
                             <option key={type.value} value={type.value}>
                                 {type.name}
                             </option>
@@ -151,6 +129,28 @@ const InvestmentForm = () => {
                         name="expectedReturnRate"
                         step="0.01"
                         value={investment.expectedReturnRate}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Ngày đầu tư:</label>
+                    <input
+                        type="datetime-local"
+                        name="investDate"
+                        value={investment.investDate}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Ngày kết thúc:</label>
+                    <input
+                        type="datetime-local"
+                        name="endDate"
+                        value={investment.endDate}
                         onChange={handleInputChange}
                         required
                     />

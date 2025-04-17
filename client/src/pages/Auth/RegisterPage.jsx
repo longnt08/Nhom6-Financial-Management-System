@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useAuth} from "../../AuthContext.jsx";
 import {Link} from 'react-router-dom';
+import '../../assets/css/Auth.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container register-page">
       <div className="auth-form">
         <h2>Register</h2>
         {error && <div className="error-message">{error}</div>}

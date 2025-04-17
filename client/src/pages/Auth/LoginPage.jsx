@@ -20,7 +20,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container ">
       <div className="auth-form">
         <h2>Login</h2>
         {error && <div className="error-message">{error}</div>}

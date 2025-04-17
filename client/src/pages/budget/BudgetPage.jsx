@@ -1,5 +1,6 @@
 import BudgetService from "../../services/BudgetService.js";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const BudgetPage = () => {
     const [budgets, setBudgets] = useState([]);
@@ -21,24 +22,6 @@ const BudgetPage = () => {
         fetchData();
     }, []);
 
-    const formatDate = (dateString, includeTime = true) => {
-        if (!dateString) return "";
-        const date = new Date(dateString);
-
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-
-        if (!includeTime) {
-            return `${day}/${month}/${year}`;
-        }
-
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-
-        return `${day}/${month}/${year} ${hours}:${minutes}`;
-    };
-
     return (
         <div>
             <h1>Budget Management</h1>
@@ -51,17 +34,16 @@ const BudgetPage = () => {
             {tableStatus === "LIST" && (
                 <div>
                     <h1>Danh sách Budget</h1>
-                    <a href="/budget/create">Tạo Budget mới</a>
+                    <Link to="/budget/create">Tạo Budget mới</Link>
 
                     <table>
                         <thead>
                         <tr>
                             <th>ID</th>
                             <th>Tên</th>
-                            <th>Số tiền</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
                             <th>Loại</th>
+                            <th>Số tiền dự kiến</th>
+                            <th>Số tiền đã chi</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -72,21 +54,20 @@ const BudgetPage = () => {
                                 <tr key={budget.id}>
                                     <td>{budget.id}</td>
                                     <td>{budget.name}</td>
-                                    <td>{budget.amount}</td>
-                                    <td>{formatDate(budget.startDate)}</td>
-                                    <td>{formatDate(budget.endDate)}</td>
-                                    <td>{budget.type}</td>
+                                    <td>{budget.budget_type}</td>
+                                    <td>{budget.expected_amount.toLocaleString('vi-VN')} VND</td>
+                                    <td>{budget.spent_amount.toLocaleString('vi-VN')} VND</td>
                                     <td>
-                                        <a href={`/budget/edit/${budget.id}`}>Chỉnh sửa</a>
+                                        <Link to={`/budget/edit/${budget.id}`}>Chỉnh sửa</Link>
                                     </td>
                                     <td>
-                                        <a href={`/budget/view/${budget.id}`}>Chi tiết</a>
+                                        <Link to={`/budget/view/${budget.id}`}>Chi tiết</Link>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="8">Không có dữ liệu</td>
+                                <td colSpan="7">Không có dữ liệu</td>
                             </tr>
                         )}
                         </tbody>
