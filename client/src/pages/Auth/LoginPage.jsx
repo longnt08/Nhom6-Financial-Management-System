@@ -15,21 +15,22 @@ const LoginPage = () => {
     try {
       await login(username, password);
     } catch (err) {
-      setError(err.toString() || 'Login failed. Please check your credentials.');
+      setError(err.toString() || 'Đăng nhập thất bại. Vui lòng kiểm tra thông tin đăng nhập.');
     }
   };
 
   return (
-    <div className="auth-container ">
+    <div className="auth-container">
       <div className="auth-form">
-        <h2>Login</h2>
+        <h2>Đăng Nhập</h2>
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Username</label>
+            <label htmlFor="username">Tên đăng nhập <span className="required">*</span>:</label>
             <input
               type="text"
+              id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -37,20 +38,22 @@ const LoginPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="password">Mật khẩu <span className="required">*</span>:</label>
             <input
               type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          <button type="submit" className="submit-btn">Login</button>
+          <Link to="#" className="forgot-password">Quên mật khẩu</Link>
+          <button type="submit" className="submit-btn">Gửi</button>
         </form>
 
         <p>
-          Don't have an account? <Link to="/register">Register here</Link>
+          Chưa có tài khoản? <Link to="/register">Đăng ký tại đây</Link>
         </p>
       </div>
     </div>

@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-const BASE_URL = 'api/investment';
+const BASE_URL = '/api/investment';
 
 const getAllInvestments = async () => {
     const response = await axios.get(`${BASE_URL}/record`);
-    console.log(response)
     return response.data;
 };
 
 const getInvestment = async (id) => {
+    console.log(`${BASE_URL}/record/${id}`)
     const response = await axios.get(`${BASE_URL}/record/${id}`);
+    console.log(response.data)
     return response.data;
 };
 

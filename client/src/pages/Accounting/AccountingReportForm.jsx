@@ -73,50 +73,57 @@ const AccountingReportForm = () => {
   }
 
   return (
-    <div>
-      <h2>
-        {id ? 'Chỉnh sửa báo cáo' : 'Tạo báo cáo mới'}
-        {error && <span style={{color: 'red'}}>{error}</span>}
-      </h2>
+    <div className="auth-container">
+      <div className="auth-form">
+        <h2>
+          {id ? 'Chỉnh sửa báo cáo' : 'Tạo báo cáo mới'}
+        </h2>
+        {error && <div className="error-message">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Loại báo cáo:</label>
-          <input
-            type="text"
-            name="reportType"
-            value={report.reportType}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="reportType">Loại báo cáo <span className="required">*</span>:</label>
+            <input
+              type="text"
+              id="reportType"
+              name="reportType"
+              value={report.reportType}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Ngày bắt đầu:</label>
-          <input
-            type="datetime-local"
-            name="startDate"
-            value={formatDateForInput(report.startDate)}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="startDate">Ngày bắt đầu <span className="required">*</span>:</label>
+            <input
+              type="datetime-local"
+              id="startDate"
+              name="startDate"
+              value={formatDateForInput(report.startDate)}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Ngày kết thúc:</label>
-          <input
-            type="datetime-local"
-            name="endDate"
-            value={formatDateForInput(report.endDate)}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="endDate">Ngày kết thúc <span className="required">*</span>:</label>
+            <input
+              type="datetime-local"
+              id="endDate"
+              name="endDate"
+              value={formatDateForInput(report.endDate)}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <button type="submit">Lưu báo cáo</button>
-      </form>
+          <button type="submit" className="submit-btn">Lưu báo cáo</button>
+        </form>
 
-      <button onClick={() => navigate('/accounting')}>Quay lại danh sách</button>
+        <p>
+          <a href="#" onClick={() => navigate('/accounting')}>Quay lại danh sách</a>
+        </p>
+      </div>
     </div>
   )
 }

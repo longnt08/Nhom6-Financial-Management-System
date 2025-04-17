@@ -29,6 +29,7 @@ const login = async (credentials) => {
     return user
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 
@@ -38,8 +39,33 @@ const logout = () => {
 
 const getCurrentUser = () => {
   const user = localStorage.getItem('financialUser')
-  return user ? JSON.parse(user) : null
+  if (!user) return null;
+  
+  // Return the user even if token might be expired
+  // This allows showing user info in the UI until logout is clicked
+  return JSON.parse(user)
 }
+
+// Set up axios interceptor to handle requests even when token is expired
+axios.interceptors.request.use(
+  config => {
+    const user = getCurrentUser();
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
+    }
+    return config;
+  },
+  error => Promise.reject(error)
+);
+
+// Don't automatically redirect on 401/403 errors
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    // Let the component handle the error without auto-logout
+    return Promise.reject(error);
+  }
+);
 
 export default {
   register,

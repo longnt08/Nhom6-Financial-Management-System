@@ -160,7 +160,7 @@ Content-Type: application/json
 GET http://localhost:8080/FinancialManagement/api/investment/record
 ###
 
-GET http://localhost:8080/FinancialManagement/api/investment/record/67b5ff988332ff332b65f765
+GET http://localhost:8080/FinancialManagement/api/investment/record/67f89e67d6da8a69e2e6b110
 
 ###
 

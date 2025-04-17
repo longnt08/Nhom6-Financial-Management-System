@@ -6,13 +6,19 @@ const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
     const storedUser = AuthenticationService.getCurrentUser()
     if (storedUser) {
-      setUser(storedUser)
+      // Always set the user from localStorage, regardless of token expiration
+      // This ensures the user stays logged in across page reloads
+      setUser(storedUser);
+
+      // We'll handle token expiration in the axios interceptors instead
     }
+    setLoading(false)
   }, [])
 
   const login = async (username, password) => {
@@ -37,11 +43,12 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     AuthenticationService.logout()
     setUser(null)
-    navigate('/login')
+    // Stay on the current page instead of redirecting to login
+    // (removed: navigate('/login'))
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
       {children}
     </AuthContext.Provider>
   )

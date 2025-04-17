@@ -15,7 +15,7 @@ const BudgetView = () => {
                 const response = await BudgetService.getBudget(id);
                 setBudget(response.data);
             } catch (err) {
-                setError('Không thể tải thông tin budget');
+                setError('Không thể tải thông tin ngân sách');
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -27,26 +27,30 @@ const BudgetView = () => {
         }
     }, [id]);
 
-    if (loading) return <div>Đang tải...</div>;
-    if (error) return <div>Lỗi: {error}</div>;
-    if (!budget) return <div>Không tìm thấy budget</div>;
+    if (loading) return <div className="loading-message">Đang tải...</div>;
+    if (error) return <div className="error-message">Lỗi: {error}</div>;
+    if (!budget) return <div className="error-message">Không tìm thấy ngân sách</div>;
 
     return (
-        <div>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <h1>Budget: {budget.name || 'Budget ' + budget.id}</h1>
-                <p>ID: {budget.id}</p>
+        <div className="view-container">
+            <div className="view-header">
+                <h1>Ngân sách: {budget.name || 'Ngân sách ' + budget.id}</h1>
+                <p className="id-display">ID: {budget.id}</p>
             </div>
 
-            <div>
-                <p><strong>ID người tạo:</strong> {budget.user_id}</p>
-                <p><strong>Tên:</strong> {budget.name}</p>
-                <p><strong>Loại budget:</strong> {budget.budget_type}</p>
-                <p><strong>Số tiền dự kiến:</strong> {budget.expected_amount.toLocaleString('vi-VN')} VND</p>
-                <p><strong>Số tiền đã chi:</strong> {budget.spent_amount.toLocaleString('vi-VN')} VND</p>
+            <div className="view-content">
+                <div className="info-card">
+                    <p><strong>ID người tạo:</strong> {budget.user_id}</p>
+                    <p><strong>Tên:</strong> {budget.name}</p>
+                    <p><strong>Loại ngân sách:</strong> {budget.budget_type}</p>
+                    <p><strong>Số tiền dự kiến:</strong> {budget.expected_amount.toLocaleString('vi-VN')} VND</p>
+                    <p><strong>Số tiền đã chi:</strong> {budget.spent_amount.toLocaleString('vi-VN')} VND</p>
+                </div>
             </div>
 
-            <Link to="/budget">Quay lại danh sách</Link>
+            <div className="view-footer">
+                <Link to="/budget" className="back-link">Quay lại danh sách</Link>
+            </div>
         </div>
     );
 };

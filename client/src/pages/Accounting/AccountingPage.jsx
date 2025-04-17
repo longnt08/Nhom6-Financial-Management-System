@@ -5,7 +5,7 @@ const AccountingPage = () => {
   const [records, setRecord] = useState([])
   const [reports, setReport] = useState([])
   const [tableStatus, setTableStatus] = useState("CLOSED")
-  
+
   const handleFormAppearance = (newStatus) => {
     if (tableStatus === "CLOSED") {
       setTableStatus(newStatus)
@@ -13,7 +13,7 @@ const AccountingPage = () => {
       setTableStatus("CLOSED")
     }
   }
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,44 +27,51 @@ const AccountingPage = () => {
     }
     fetchData()
   }, []);
-  
+
   // Function to format dates
   const formatDate = (dateString, includeTime = true) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    
+
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
-    
+
     if (!includeTime) {
       return `${day}/${month}/${year}`;
     }
-    
+
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    
+
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   };
 
   return (
     <div>
       <h1>Trang kế toán</h1>
-      <div>
-        <button onClick={() => handleFormAppearance("RECORD")}>
-          Giao dịch kế toán
-        </button>
+      <div className="container">
+        <div className="box">
+          <h3>Ghi chép các giao dịch</h3>
+          <div className="buttons">
+            <button onClick={() => handleFormAppearance("RECORD")}>Xem</button>
+            <button onClick={() => window.location.href="/accounting/record/create"}>Tạo</button>
+          </div>
+        </div>
 
-        <button onClick={() => handleFormAppearance("REPORT")}>
-          Báo cáo kế toán
-        </button>
+        <div className="box">
+          <h3>Báo cáo tài chính</h3>
+          <div className="buttons">
+            <button onClick={() => handleFormAppearance("REPORT")}>Xem</button>
+            <button onClick={() => window.location.href="/accounting/report/create"}>Tạo</button>
+          </div>
+        </div>
       </div>
 
       {tableStatus === "RECORD" && (
         <div>
           <h1>Danh sách giao dịch kế toán</h1>
-          <a href="/accounting/record/create">Tạo giao dịch</a>
-          
+
           <table>
             <thead>
               <tr>
@@ -111,8 +118,7 @@ const AccountingPage = () => {
       {tableStatus === "REPORT" && (
         <div>
           <h1>Danh sách báo cáo</h1>
-          <a href="/accounting/report/create">Tạo báo cáo mới</a>
-          
+
           <table>
             <thead>
               <tr>

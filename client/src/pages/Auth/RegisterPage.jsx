@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {useAuth} from "../../AuthContext.jsx";
 import {Link} from 'react-router-dom';
-import '../../assets/css/Auth.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +26,7 @@ const RegisterPage = () => {
     setError('');
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError('Mật khẩu không khớp');
       return;
     }
 
@@ -35,21 +34,22 @@ const RegisterPage = () => {
       const {confirmPassword, ...registerData} = formData;
       await register(registerData);
     } catch (err) {
-      setError(err.toString() || 'Registration failed. Please try again.');
+      setError(err.toString() || 'Đăng ký thất bại. Vui lòng thử lại.');
     }
   };
 
   return (
-    <div className="auth-container register-page">
+    <div className="auth-container">
       <div className="auth-form">
-        <h2>Register</h2>
+        <h2>Đăng Ký</h2>
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Username</label>
+            <label htmlFor="username">Tên đăng nhập <span className="required">*</span>:</label>
             <input
               type="text"
+              id="username"
               name="username"
               value={formData.username}
               onChange={handleChange}
@@ -58,9 +58,10 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="email">Email <span className="required">*</span>:</label>
             <input
               type="email"
+              id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
@@ -69,9 +70,10 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="password">Mật khẩu <span className="required">*</span>:</label>
             <input
               type="password"
+              id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -80,9 +82,10 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Confirm Password</label>
+            <label htmlFor="confirmPassword">Xác nhận mật khẩu <span className="required">*</span>:</label>
             <input
               type="password"
+              id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -90,11 +93,11 @@ const RegisterPage = () => {
             />
           </div>
 
-          <button type="submit" className="submit-btn">Register</button>
+          <button type="submit" className="submit-btn">Gửi</button>
         </form>
 
         <p>
-          Already have an account? <Link to="/login">Login here</Link>
+          Đã có tài khoản? <Link to="/login">Đăng nhập tại đây</Link>
         </p>
       </div>
     </div>

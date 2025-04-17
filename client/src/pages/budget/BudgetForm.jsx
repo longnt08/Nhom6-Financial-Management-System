@@ -74,78 +74,87 @@ const BudgetForm = () => {
     };
 
     return (
-        <div>
-            <h2>
-                {id ? 'Chỉnh sửa Budget' : 'Tạo Budget mới'}
-                {error && <span style={{ color: 'red' }}>{error}</span>}
-            </h2>
+        <div className="auth-container">
+            <div className="auth-form">
+                <h2>
+                    {id ? 'Chỉnh sửa ngân sách' : 'Tạo ngân sách mới'}
+                </h2>
+                {error && <div className="error-message">{error}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>User ID:</label>
-                    <input
-                        type="text"
-                        name="user_id"
-                        value={budget.user_id}
-                        onChange={handleInputChange}
-                        placeholder="Enter user ID (e.g., 67b5ff8c8332ff332b65f6ee)"
-                    />
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="user_id">User ID <span className="required">*</span>:</label>
+                        <input
+                            type="text"
+                            id="user_id"
+                            name="user_id"
+                            value={budget.user_id}
+                            onChange={handleInputChange}
+                            placeholder="Enter user ID (e.g., 67b5ff8c8332ff332b65f6ee)"
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Tên:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={budget.name}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="name">Tên <span className="required">*</span>:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={budget.name}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Loại Budget:</label>
-                    <select
-                        name="budget_type"
-                        value={budget.budget_type}
-                        onChange={handleInputChange}
-                    >
-                        {budgetTypes.map(type => (
-                            <option key={type.value} value={type.value}>
-                                {type.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="budget_type">Loại ngân sách<span className="required">*</span>:</label>
+                        <select
+                            id="budget_type"
+                            name="budget_type"
+                            value={budget.budget_type}
+                            onChange={handleInputChange}
+                        >
+                            {budgetTypes.map(type => (
+                                <option key={type.value} value={type.value}>
+                                    {type.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div className="form-group">
-                    <label>Số tiền dự kiến:</label>
-                    <input
-                        type="number"
-                        name="expected_amount"
-                        step="0.01"
-                        value={budget.expected_amount}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="expected_amount">Số tiền dự kiến <span className="required">*</span>:</label>
+                        <input
+                            type="number"
+                            id="expected_amount"
+                            name="expected_amount"
+                            step="0.01"
+                            value={budget.expected_amount}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Số tiền đã chi:</label>
-                    <input
-                        type="number"
-                        name="spent_amount"
-                        step="0.01"
-                        value={budget.spent_amount}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="spent_amount">Số tiền đã chi <span className="required">*</span>:</label>
+                        <input
+                            type="number"
+                            id="spent_amount"
+                            name="spent_amount"
+                            step="0.01"
+                            value={budget.spent_amount}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <button type="submit">Lưu</button>
-            </form>
+                    <button type="submit" className="submit-btn">Lưu</button>
+                </form>
 
-            <button onClick={() => navigate('/budget')}>Quay lại danh sách</button>
+                <p>
+                    <a href="#" onClick={() => navigate('/budget')}>Quay lại danh sách</a>
+                </p>
+            </div>
         </div>
     );
 };

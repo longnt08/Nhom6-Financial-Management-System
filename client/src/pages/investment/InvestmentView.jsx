@@ -15,7 +15,7 @@ const InvestmentView = () => {
                 const response = await InvestmentService.getInvestment(id);
                 setInvestment(response.data);
             } catch (err) {
-                setError('Không thể tải thông tin investment');
+                setError('Không thể tải thông tin đầu tư');
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -27,9 +27,9 @@ const InvestmentView = () => {
         }
     }, [id]);
 
-    if (loading) return <div>Đang tải...</div>;
-    if (error) return <div>Lỗi: {error}</div>;
-    if (!investment) return <div>Không tìm thấy investment</div>;
+    if (loading) return <div className="loading-message">Đang tải...</div>;
+    if (error) return <div className="error-message">Lỗi: {error}</div>;
+    if (!investment) return <div className="error-message">Không tìm thấy đầu tư</div>;
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -43,22 +43,26 @@ const InvestmentView = () => {
     };
 
     return (
-        <div>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <h1>Investment: {investment.investmentType || 'Investment ' + investment.id}</h1>
-                <p>ID: {investment.id}</p>
+        <div className="view-container">
+            <div className="view-header">
+                <h1>Đầu tư: {investment.investmentType || 'Đầu tư ' + investment.id}</h1>
+                <p className="id-display">ID: {investment.id}</p>
             </div>
 
-            <div>
-                <p><strong>ID người tạo:</strong> {investment.userId}</p>
-                <p><strong>Loại investment:</strong> {investment.investmentType}</p>
-                <p><strong>Số tiền đầu tư:</strong> {investment.investedAmount.toLocaleString('vi-VN')} VND</p>
-                <p><strong>Tỷ lệ lợi nhuận kỳ vọng:</strong> {investment.expectedReturnRate.toFixed(2)}%</p>
-                <p><strong>Ngày đầu tư:</strong> {formatDate(investment.investDate)}</p>
-                <p><strong>Ngày kết thúc:</strong> {formatDate(investment.endDate)}</p>
+            <div className="view-content">
+                <div className="info-card">
+                    <p><strong>ID người tạo:</strong> {investment.userId}</p>
+                    <p><strong>Loại đầu tư:</strong> {investment.investmentType}</p>
+                    <p><strong>Số tiền đầu tư:</strong> {investment.investedAmount.toLocaleString('vi-VN')} VND</p>
+                    <p><strong>Tỷ lệ lợi nhuận kỳ vọng:</strong> {investment.expectedReturnRate.toFixed(2)}%</p>
+                    <p><strong>Ngày đầu tư:</strong> {formatDate(investment.investDate)}</p>
+                    <p><strong>Ngày kết thúc:</strong> {formatDate(investment.endDate)}</p>
+                </div>
             </div>
 
-            <Link to="/investment">Quay lại danh sách</Link>
+            <div className="view-footer">
+                <Link to="/investment" className="back-link">Quay lại danh sách</Link>
+            </div>
         </div>
     );
 };

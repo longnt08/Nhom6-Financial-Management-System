@@ -27,9 +27,9 @@ const AccountingRecordView = () => {
     }
   }, [id])
 
-  if (loading) return <div>Đang tải...</div>
-  if (error) return <div>Lỗi: {error}</div>
-  if (!record) return <div>Không tìm thấy giao dịch</div>
+  if (loading) return <div className="loading-message">Đang tải...</div>
+  if (error) return <div className="error-message">Lỗi: {error}</div>
+  if (!record) return <div className="error-message">Không tìm thấy giao dịch</div>
 
   // Format date for display
   const formatDate = (dateString) => {
@@ -45,23 +45,39 @@ const AccountingRecordView = () => {
   }
 
   return (
-    <div>
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+    <div className="view-container">
+      <div className="view-header">
         <h1>Giao dịch: {record.name}</h1>
         <p>ID: {record.id || record._id}</p>
       </div>
 
-      <div>
-        <p><strong>Ngày giao dịch:</strong> {formatDate(record.date)}</p>
-        <p><strong>Mã giao dịch:</strong> {record.code}</p>
-        <p><strong>Mô tả:</strong> {record.description}</p>
-        <p><strong>Số tiền nợ:</strong> {record.debit}</p>
-        <p><strong>Số tiền có:</strong> {record.credit}</p>
-        <p><strong>Loại giao dịch:</strong> {record.category?.name}</p>
-        <p><strong>ID người tạo:</strong> {record.user_id}</p>
+      <div className="view-content">
+        <div className="view-field">
+          <strong>Ngày giao dịch:</strong> {formatDate(record.date)}
+        </div>
+        <div className="view-field">
+          <strong>Mã giao dịch:</strong> {record.code}
+        </div>
+        <div className="view-field">
+          <strong>Mô tả:</strong> {record.description}
+        </div>
+        <div className="view-field">
+          <strong>Số tiền nợ:</strong> {record.debit?.toLocaleString('vi-VN')} VND
+        </div>
+        <div className="view-field">
+          <strong>Số tiền có:</strong> {record.credit?.toLocaleString('vi-VN')} VND
+        </div>
+        <div className="view-field">
+          <strong>Loại giao dịch:</strong> {record.category?.name}
+        </div>
+        <div className="view-field">
+          <strong>ID người tạo:</strong> {record.user_id}
+        </div>
       </div>
 
-      <Link to="/accounting/record">Quay lại danh sách</Link>
+      <div className="view-footer">
+        <Link to="/accounting" className="back-link">Quay lại danh sách</Link>
+      </div>
     </div>
   )
 }

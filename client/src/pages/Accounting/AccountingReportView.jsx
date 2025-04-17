@@ -27,9 +27,9 @@ const AccountingReportView = () => {
     }
   }, [id])
 
-  if (loading) return <div>Đang tải...</div>
-  if (error) return <div>Lỗi: {error}</div>
-  if (!report) return <div>Không tìm thấy báo cáo</div>
+  if (loading) return <div className="loading-message">Đang tải...</div>
+  if (error) return <div className="error-message">Lỗi: {error}</div>
+  if (!report) return <div className="error-message">Không tìm thấy báo cáo</div>
 
   // Format date for display
   const formatDate = (dateString) => {
@@ -43,53 +43,61 @@ const AccountingReportView = () => {
   }
 
   return (
-    <div>
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h1>{report.reportType}</h1>
-        <p>Từ: {formatDate(report.startDate)} - Đến: {formatDate(report.endDate)}</p>
+    <div className="view-container">
+      <div className="view-header">
+        <h1>Báo cáo: {report.reportType}</h1>
+        <p className="report-period">Từ: {formatDate(report.startDate)} - Đến: {formatDate(report.endDate)}</p>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div>
-          <p><strong>ID người dùng:</strong> {report.user_id || report.userId}</p>
+      <div className="view-content">
+        <div className="info-card">
+          <div className="report-meta">
+            <div className="report-meta-left">
+              <p><strong>ID người dùng:</strong> {report.user_id || report.userId}</p>
+            </div>
+            <div className="report-meta-right">
+              <p><strong>Ngày tạo:</strong> {formatDate(report.date_created)}</p>
+              <p><strong>ID báo cáo:</strong> {report.id || report._id}</p>
+            </div>
+          </div>
+
+          <div className="report-table-container">
+            <table className="report-table">
+              <thead>
+                <tr>
+                  <th>Danh mục</th>
+                  <th>Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                {report.content && report.content.length > 0 ? (
+                  report.content.map((entry, index) => (
+                    <tr key={index}>
+                      <td>{entry.category}</td>
+                      <td>{entry.amount}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="2" className="no-data">
+                      Không có dữ liệu
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="report-signature">
+            <p>Người lập báo cáo: ____________________</p>
+            <p>Ngày: ____________________</p>
+          </div>
         </div>
-        <div>
-          <p><strong>Ngày tạo:</strong> {formatDate(report.date_created)}</p>
-          <p><strong>ID báo cáo:</strong> {report.id || report._id}</p>
-        </div>
       </div>
 
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Danh mục</th>
-            <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Thành tiền</th>
-          </tr>
-        </thead>
-        <tbody>
-          {report.content && report.content.length > 0 ? (
-            report.content.map((entry, index) => (
-              <tr key={index}>
-                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.category}</td>
-                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.amount}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="2" style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'center' }}>
-                Không có dữ liệu
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      <div style={{ marginTop: '30px', textAlign: 'right' }}>
-        <p>Người lập báo cáo: ____________________</p>
-        <p>Ngày: ____________________</p>
+      <div className="view-footer">
+        <Link to="/accounting" className="back-link">Quay lại danh sách</Link>
       </div>
-
-      <Link to="/accounting/report">Quay lại danh sách báo cáo</Link>
     </div>
   )
 }

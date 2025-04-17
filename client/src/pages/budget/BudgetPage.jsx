@@ -24,18 +24,22 @@ const BudgetPage = () => {
 
     return (
         <div>
-            <h1>Budget Management</h1>
-            <div>
-                <button onClick={() => handleFormAppearance("LIST")}>
-                    Danh sách Budget
-                </button>
+            <h1>Quản lý ngân sách</h1>
+
+            <div className="container">
+                <div className="box">
+                    <h3>Ghi chép các giao dịch ngân sách</h3>
+                    <div className="buttons">
+                        <button onClick={() => handleFormAppearance("LIST")}>Xem</button>
+                        <button onClick={() => window.location.href="/budget/create"}>Tạo</button>
+                    </div>
+                </div>
+
             </div>
 
             {tableStatus === "LIST" && (
                 <div>
-                    <h1>Danh sách Budget</h1>
-                    <Link to="/budget/create">Tạo Budget mới</Link>
-
+                    <h1>Danh sách ngân sách</h1>
                     <table>
                         <thead>
                         <tr>

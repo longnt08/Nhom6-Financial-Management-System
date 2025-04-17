@@ -77,89 +77,100 @@ const InvestmentForm = () => {
     };
 
     return (
-        <div>
-            <h2>
-                {id ? 'Chỉnh sửa Investment' : 'Tạo Investment mới'}
-                {error && <span style={{ color: 'red' }}>{error}</span>}
-            </h2>
+        <div className="auth-container">
+            <div className="auth-form">
+                <h2>
+                    {id ? 'Chỉnh sửa đầu tư' : 'Tạo đầu tư mới'}
+                </h2>
+                {error && <div className="error-message">{error}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>User ID:</label>
-                    <input
-                        type="text"
-                        name="userId"
-                        value={investment.userId}
-                        onChange={handleInputChange}
-                        placeholder="Enter user ID (e.g., 67b5ff8e8332ff332b65f6fe)"
-                    />
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="userId">User ID <span className="required">*</span>:</label>
+                        <input
+                            type="text"
+                            id="userId"
+                            name="userId"
+                            value={investment.userId}
+                            onChange={handleInputChange}
+                            placeholder="Enter user ID (e.g., 67b5ff8e8332ff332b65f6fe)"
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Loại Investment:</label>
-                    <select
-                        name="investmentType"
-                        value={investment.investmentType}
-                        onChange={handleInputChange}
-                    >
-                        {investmentTypes.map(type => (
-                            <option key={type.value} value={type.value}>
-                                {type.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="investmentType">Loại Đầu Tư<span className="required">*</span>:</label>
+                        <select
+                            id="investmentType"
+                            name="investmentType"
+                            value={investment.investmentType}
+                            onChange={handleInputChange}
+                            style={{ padding: '10px', width: '300px', border: 'none', borderRadius: '20px', backgroundColor: '#ddd', textAlign: 'left' }}
+                        >
+                            {investmentTypes.map(type => (
+                                <option key={type.value} value={type.value}>
+                                    {type.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div className="form-group">
-                    <label>Số tiền đầu tư:</label>
-                    <input
-                        type="number"
-                        name="investedAmount"
-                        step="0.01"
-                        value={investment.investedAmount}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="investedAmount">Số tiền đầu tư <span className="required">*</span>:</label>
+                        <input
+                            type="number"
+                            id="investedAmount"
+                            name="investedAmount"
+                            step="0.01"
+                            value={investment.investedAmount}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Tỷ lệ lợi nhuận kỳ vọng (%):</label>
-                    <input
-                        type="number"
-                        name="expectedReturnRate"
-                        step="0.01"
-                        value={investment.expectedReturnRate}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="expectedReturnRate">Lợi nhuận kỳ vọng <span className="required">*</span>:</label>
+                        <input
+                            type="number"
+                            id="expectedReturnRate"
+                            name="expectedReturnRate"
+                            step="0.01"
+                            value={investment.expectedReturnRate}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Ngày đầu tư:</label>
-                    <input
-                        type="datetime-local"
-                        name="investDate"
-                        value={investment.investDate}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="investDate">Ngày đầu tư <span className="required">*</span>:</label>
+                        <input
+                            type="datetime-local"
+                            id="investDate"
+                            name="investDate"
+                            value={investment.investDate}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Ngày kết thúc:</label>
-                    <input
-                        type="datetime-local"
-                        name="endDate"
-                        value={investment.endDate}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="endDate">Ngày kết thúc <span className="required">*</span>:</label>
+                        <input
+                            type="datetime-local"
+                            id="endDate"
+                            name="endDate"
+                            value={investment.endDate}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
 
-                <button type="submit">Lưu</button>
-            </form>
+                    <button type="submit" className="submit-btn">Lưu</button>
+                </form>
 
-            <button onClick={() => navigate('/investment')}>Quay lại danh sách</button>
+                <p>
+                    <a href="#" onClick={() => navigate('/investment')}>Quay lại danh sách</a>
+                </p>
+            </div>
         </div>
     );
 };

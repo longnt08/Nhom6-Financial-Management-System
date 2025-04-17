@@ -35,17 +35,22 @@ const InvestmentPage = () => {
 
     return (
         <div>
-            <h1>Investment Management</h1>
-            <div>
-                <button onClick={() => handleFormAppearance("LIST")}>
-                    Danh sách Investment
-                </button>
+            <h1>Quản lý đầu tư</h1>
+
+            <div className="container">
+                <div className="box">
+                    <h3>Ghi chép các giao dịch đầu tư</h3>
+                    <div className="buttons">
+                        <button onClick={() => handleFormAppearance("LIST")}>Xem</button>
+                        <button onClick={() => window.location.href="/investment/record/create"}>Tạo</button>
+                    </div>
+                </div>
             </div>
 
             {tableStatus === "LIST" && (
                 <div>
-                    <h1>Danh sách Investment</h1>
-                    <Link to="/investment/create">Tạo Investment mới</Link>
+                    <h1>Danh sách đầu tư</h1>
+                    <Link to="/investment/record/create">Tạo đầu tư mới</Link>
 
                     <table>
                         <thead>
@@ -71,10 +76,10 @@ const InvestmentPage = () => {
                                     <td>{formatDate(investment.investDate)}</td>
                                     <td>{formatDate(investment.endDate)}</td>
                                     <td>
-                                        <Link to={`/investment/edit/${investment.id}`}>Chỉnh sửa</Link>
+                                        <Link to={`/investment/record/edit/${investment.id}`}>Chỉnh sửa</Link>
                                     </td>
                                     <td>
-                                        <Link to={`/investment/view/${investment.id}`}>Chi tiết</Link>
+                                        <Link to={`/investment/record/view/${investment.id}`}>Chi tiết</Link>
                                     </td>
                                 </tr>
                             ))
