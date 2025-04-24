@@ -8,7 +8,6 @@ const InvestmentForm = () => {
     const [error, setError] = useState(null);
 
     const [investment, setInvestment] = useState({
-        userId: '',
         investmentType: 'STOCK',
         investedAmount: 0,
         expectedReturnRate: 0,
@@ -29,7 +28,6 @@ const InvestmentForm = () => {
                 .then(response => {
                     const data = response.data;
                     setInvestment({
-                        userId: data.userId || '',
                         investmentType: data.investmentType || 'STOCK',
                         investedAmount: data.investedAmount || 0,
                         expectedReturnRate: data.expectedReturnRate || 0,
@@ -56,7 +54,7 @@ const InvestmentForm = () => {
 
         const submitInvestment = {
             ...investment,
-            userId: investment.userId || '67b5ff8e8332ff332b65f6fe', // Default userId if needed
+            userId: localStorage.getItem('id'),
             investedAmount: parseFloat(investment.investedAmount),
             expectedReturnRate: parseFloat(investment.expectedReturnRate),
             investDate: investment.investDate ? new Date(investment.investDate).toISOString() : null,
@@ -85,18 +83,6 @@ const InvestmentForm = () => {
                 {error && <div className="error-message">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="userId">User ID <span className="required">*</span>:</label>
-                        <input
-                            type="text"
-                            id="userId"
-                            name="userId"
-                            value={investment.userId}
-                            onChange={handleInputChange}
-                            placeholder="Enter user ID (e.g., 67b5ff8e8332ff332b65f6fe)"
-                        />
-                    </div>
-
                     <div className="form-group">
                         <label htmlFor="investmentType">Loại Đầu Tư<span className="required">*</span>:</label>
                         <select

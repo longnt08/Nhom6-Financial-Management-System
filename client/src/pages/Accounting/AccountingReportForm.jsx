@@ -8,7 +8,6 @@ const AccountingReportForm = () => {
   const [error, setError] = useState(null)
 
   const [report, setReport] = useState({
-    user_id: '67b5ff8e8332ff332b65f6fe',
     reportType: '',
     startDate: '',
     endDate: '',
@@ -42,6 +41,7 @@ const AccountingReportForm = () => {
 
     const submitReport = {
       ...report,
+      user_id: localStorage.getItem('id'),
       startDate: new Date(report.startDate).toISOString(),
       endDate: new Date(report.endDate).toISOString(),
       id: id

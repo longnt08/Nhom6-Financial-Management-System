@@ -19,12 +19,17 @@ const login = async (credentials) => {
 
     const decodedToken = jwtDecode(token)  // Use the named import
 
+    console.log(decodedToken.sub, decodedToken.role, decodedToken.id)
     const user = {
       token,
       username: decodedToken.sub,
-      role: decodedToken.role
+      role: decodedToken.role,
+      id: decodedToken.jit,
     }
+    
     localStorage.setItem('financialUser', JSON.stringify(user))
+    // Store the user ID separately for easier access
+    localStorage.setItem('id', decodedToken.jit)
 
     return user
   } catch (error) {
@@ -35,6 +40,7 @@ const login = async (credentials) => {
 
 const logout = () => {
   localStorage.removeItem('financialUser')
+  localStorage.removeItem('id')
 }
 
 const getCurrentUser = () => {

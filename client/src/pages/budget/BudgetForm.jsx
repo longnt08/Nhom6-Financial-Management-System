@@ -8,7 +8,6 @@ const BudgetForm = () => {
     const [error, setError] = useState(null);
 
     const [budget, setBudget] = useState({
-        user_id: '',
         name: '',
         budget_type: 'TECHNOLOGY',
         expected_amount: 0,
@@ -29,7 +28,6 @@ const BudgetForm = () => {
                 .then(response => {
                     const data = response.data;
                     setBudget({
-                        user_id: data.user_id || '',
                         name: data.name || '',
                         budget_type: data.budget_type || 'TECHNOLOGY',
                         expected_amount: data.expected_amount || 0,
@@ -55,7 +53,7 @@ const BudgetForm = () => {
 
         const submitBudget = {
             ...budget,
-            user_id: budget.user_id || '67b5ff8c8332ff332b65f6ee', // Giá trị mặc định nếu cần
+            user_id: localStorage.getItem('id'),
             expected_amount: parseFloat(budget.expected_amount),
             spent_amount: parseFloat(budget.spent_amount)
         };
@@ -82,18 +80,6 @@ const BudgetForm = () => {
                 {error && <div className="error-message">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="user_id">User ID <span className="required">*</span>:</label>
-                        <input
-                            type="text"
-                            id="user_id"
-                            name="user_id"
-                            value={budget.user_id}
-                            onChange={handleInputChange}
-                            placeholder="Enter user ID (e.g., 67b5ff8c8332ff332b65f6ee)"
-                        />
-                    </div>
-
                     <div className="form-group">
                         <label htmlFor="name">Tên <span className="required">*</span>:</label>
                         <input

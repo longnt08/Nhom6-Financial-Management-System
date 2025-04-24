@@ -8,7 +8,6 @@ const AccountingRecordForm = () => {
   const [error, setError] = useState(null)
 
   const [record, setRecord] = useState({
-    user_id: '',
     date: '',
     code: '',
     name: '',
@@ -40,7 +39,7 @@ const AccountingRecordForm = () => {
               data.formattedDate = dateObj.toISOString().substring(0, 16);
             }
           }
-          setRecord(data)
+          setRecord(data.data)
         })
         .catch(error => {
           setError('Error loading record: ' + error.message)
@@ -61,9 +60,8 @@ const AccountingRecordForm = () => {
 
     const submitRecord = {
       ...record,
-      // user_id: record.user_id || localStorage.getItem('userId'), // Use local storage for user_id
-      user_id: '67b5ff8e8332ff332b65f6fe',
-      id: id // Include id for updates
+      user_id: localStorage.getItem('id'),
+      id: id
     }
 
     if (submitRecord.date && !submitRecord.date.endsWith('Z')) {

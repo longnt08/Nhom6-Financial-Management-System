@@ -17,15 +17,7 @@ public class AuditService implements AuditServiceLocal {
 
     @Inject
     private AuditRepository repository;
-//    @Override
-//    public List<Audit> getAll() {
-//        return repository.findAll();
-//    }
-//
-//    @Override
-//    public Audit get(String id) {
-//        return repository.findById(id);
-//    }
+
     @Override
     public List<Document> getAll() {
         return repository.findAllWithRelations();

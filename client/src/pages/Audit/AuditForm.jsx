@@ -10,7 +10,6 @@ const AuditForm = () => {
 
   const [formData, setFormData] = useState({
     title: "",
-    userId: "67b5ff8e8332ff332b65f6fe",
     auditType: "RECORD_INFO",
     auditDate: new Date().toISOString().split('T')[0],
     result: "ACCEPTED",
@@ -40,7 +39,6 @@ const AuditForm = () => {
 
           setFormData({
             title: audit.title || "",
-            userId: audit.user_id || "67b5ff8e8332ff332b65f6fe",
             auditType: audit.audit_type || "RECORD_INFO",
             auditDate: formatDateForInput(audit.date_audited) || new Date().toISOString().split('T')[0],
             result: audit.result || "ACCEPTED",
@@ -103,7 +101,7 @@ const AuditForm = () => {
       // Prepare data to match API expectations
       const submitData = {
         title: formData.title,
-        userId: formData.userId,
+        userId: localStorage.getItem('id'),
         auditType: formData.auditType,
         auditDate: new Date(formData.auditDate).toISOString(),
         result: formData.result
